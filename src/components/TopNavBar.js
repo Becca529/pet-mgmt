@@ -21,7 +21,7 @@ export class TopNavBar extends React.Component {
       }
       return (
           <div className="top-nav-bar">
-              <h1>Pet Management</h1>
+              <p>Pet Management</p>
               {logOutButton}
           </div>
       );

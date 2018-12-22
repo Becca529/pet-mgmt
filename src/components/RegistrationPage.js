@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import './SignUpForm.css';
+import './RegistrationPage.css';
 
-class SignUpForm extends Component {
+class RegistrationPage extends Component {
   render() {
     return (
       <div className="sign-up">
@@ -66,4 +66,4 @@ class SignUpForm extends Component {
   }
 }
 
-export default SignUpForm;
+export default RegistrationPage;
