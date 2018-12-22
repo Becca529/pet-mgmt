@@ -1,5 +1,11 @@
  language: node_js
  node_js: node
+ deploy:
+  provider: heroku
+  edge: true
+  app: salty-falls-18465
+  on:
+    repo: Becca529/pet-mgmt
  cache:
    directories:
      - node_modules
