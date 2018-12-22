@@ -1,11 +1,12 @@
- language: node_js
- node_js: node
- deploy:
+language: node_js
+node_js: node
+deploy:
   provider: heroku
-  edge: true
+  api_key:
+    secure: Pix0edR1BUGM3IxLMIr5CIKmiuhDmGEgqpsc8vlyfk7M5E8Ig2I0J/gnJz//2jt1TemqxbmzZMCftBLnRSWFKrQhLIh0l3sDreMs1bxd8RE+TRB/+gU4XKyq+fqLV1O+Dah0P1fAlESKnLgkHGMFAb+cTbSHXOZTWFDPZwE58AKROEkXhNsjtSixfLD18kixPXWJE2e0imhxWDfxseHIYueIkv0fUMvnbqo7Gre+22GHD2dElcRXrA/q4o2sf7bLhEYG4G0J0s7ilyYHSKOHMbJT0aFFFTrQfWI88txRFVLwO+g/RinN7BunsgsfKKghtaIkMJQUZUufXTWmulHxi5hhCtu535jr9/TY7ZvMzw8SFFPAjWVwhrVP4vJI6sIUQuD1FUDYOjm9/XXfqPRpGsszTfoBCnxVTP8rflQsp7F7E0iFT3OzUUvc+qkizAiZ16K+FVKpxla1qhh+eYc2qs5KcTQYA5e55JPaC8qi5Ak4j1KLi2TfGgOpCIiW9ZOG/rFJF3ycVtaOlGZI/uFs9l2A/8nmTLwLY703MR9q8kU4UkgazpuTlVNhTC3iovv3ngOp100rH/pU5MXmn/DQww3ntgIpOYuBmzmUooiees+LFZ/7fc/BuqyT43WjD5Omdh/9j8+EeGNURnIcYml0doizy7bs6Llfqek9SIvv55k=
   app: salty-falls-18465
   on:
     repo: Becca529/pet-mgmt
- cache:
-   directories:
-     - node_modules
+cache:
+  directories:
+  - node_modules
