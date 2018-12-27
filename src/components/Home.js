@@ -1,15 +1,35 @@
-import React, { Component } from 'react';
-import './App.css';
-import './Home.css';
+import React from 'react';
+import {connect} from 'react-redux';
+import requiresLogin from './RequiresLogin';
+import {fetchProtectedData} from '../actions/protected-data';
 
+export class Home extends React.Component {
+    componentDidMount() {
+        this.props.dispatch(fetchProtectedData());
+    }
 
-class Home extends Component {
     render() {
-        return{
-
-        }
+        return (
+            <div className="home">
+                <div className="dashboard-username">
+                    Username: {this.props.username}
+                </div>
+                <div className="dashboard-name">Name: {this.props.name}</div>
+                <div className="dashboard-protected-data">
+                    Protected data: {this.props.protectedData}
+                </div>
+            </div>
+        );
     }
 }
-  
-  
-  export default Home;
+
+const mapStateToProps = state => {
+    const {currentUser} = state.auth;
+    return {
+        username: state.auth.currentUser.username,
+        name: `${currentUser.firstName} ${currentUser.lastName}`,
+        protectedData: state.protectedData.data
+    };
+};
+
+export default requiresLogin()(connect(mapStateToProps)(Home));
