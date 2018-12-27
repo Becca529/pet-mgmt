@@ -13,8 +13,8 @@ export function LandingPage(props) {
       <div className="welcome-box">
         <h1>[Pet Management Name]</h1>
         <h2>Manage everything pet in one place</h2>
-        <button classname="landing-btn">Get Started</button>
-        <button classname="landing-btn">Sign In</button>
+        <Link className="landing-links" to="/register">Get Started</Link>
+        <Link lassName="landing-links" to="/signin">Sign In</Link>
       </div>
       <section className="feature-area">
         <div className="feature-box">

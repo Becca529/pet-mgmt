@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {clearAuth} from '../actions/auth';
 import {clearAuthToken} from '../local-storage';
+import {Link} from 'react-router-dom';
 import './TopNavBar.css';
 
 
@@ -20,8 +21,8 @@ export class TopNavBar extends React.Component {
           );
       }
       return (
-          <div className="top-nav-bar">
-              <p>Pet Management</p>
+          <div className="landing-top-nav-bar">
+              <Link to="/signin">Sign In</Link>
               {logOutButton}
           </div>
       );
