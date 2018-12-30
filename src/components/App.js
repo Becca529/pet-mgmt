@@ -1,11 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Route, withRouter} from 'react-router-dom';
+import {Route, withRouter, Switch} from 'react-router-dom';
 
 import LandingPage from './LandingPage';
 import RegistrationPage from './RegistrationPage';
 import SignInForm from './SignInForm';
-import Home from './Home';
+// import PetProfileForm from './PetProfileForm';
+import HomePage from './HomePage';
 import Footer from './Footer';
 import TopNavBar from './TopNavBar';
 import {refreshAuthToken} from '../actions/auth';
@@ -47,10 +48,10 @@ export class App extends React.Component {
       return (
           <div className="app">
               <TopNavBar />
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/register" component={RegistrationPage} />
-              <Route exact path="/signin" component={SignInForm} /> 
+                <Route exact path="/" component={LandingPage} />
+                <Route exact path="/home" component={HomePage} />
+                <Route exact path="/signin" component={props => <SignInForm {...props} />} />
+                <Route exact path="/register" component={RegistrationPage} />
               <Footer />
           </div>
       );
@@ -62,5 +63,8 @@ const mapStateToProps = state => ({
   loggedIn: state.auth.currentUser !== null
 });
 
+
 // Deal with update blocking - https://reacttraining.com/react-router/web/guides/dealing-with-update-blocking
 export default withRouter(connect(mapStateToProps)(App));
+
+//                <Route exact path="/pets" component={PetProfileForm} /> 

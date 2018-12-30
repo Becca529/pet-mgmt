@@ -13,21 +13,33 @@ export class TopNavBar extends React.Component {
   }
 
   render() {
-      // Only render the my account, log out button if we are logged in
-      let logOutButton;
-      if (this.props.loggedIn) {
-          logOutButton = (
-              <button onClick={() => this.logOut()}>Log out</button>
-          );
-      }
-      return (
-          <div className="landing-top-nav-bar">
-              <Link to="/signin">Sign In</Link>
-              {logOutButton}
-          </div>
-      );
+    if (this.props.loggedIn){
+        let logOutButton = (
+            <button onClick={() => this.logOut()}>Log out</button>
+        );
+
+        return (
+            <div className="signed-in-top-nav-bar">
+                <div className="home-logo">
+                    <Link to="/home">Home</Link>
+                </div>
+                <div>{logOutButton}</div>
+            </div>
+        );
+    }
+    else {
+        return (
+            <div className="signed-out-top-nav-bar">
+                <div className="home-logo">
+                    <Link to="/">Home</Link>
+                </div>
+            <Link to="/register" className="signed-out-link">Sign Up</Link>
+            <Link to="/signin" className="signed-out-link" >Sign In</Link>
+            </div>
+        )}
   }
 }
+
 
 const mapStateToProps = state => ({
   loggedIn: state.auth.currentUser !== null

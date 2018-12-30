@@ -1,17 +1,21 @@
-import './App.css';
-import './SignInForm.css';
 import React from 'react';
 import {Field, reduxForm, focus} from 'redux-form';
 import Input from './Input';
 import {login} from '../actions/auth';
 import {required, nonEmpty} from '../validators';
-import {Link, Redirect} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
+
 
 
 export class SignInForm extends React.Component {
-    onSubmit(values) {
-        return this.props.dispatch(login(values.username, values.password));
-    }
+// export function SignInForm(props) {
+
+   
+onSubmit(values) {
+        return this.props.dispatch(login(values.username, values.password))
+        };
+
+
 
     render() {
         let error;
@@ -22,22 +26,19 @@ export class SignInForm extends React.Component {
                 </div>
             );
         }
-        //if statement for spinning
-
-
-        if (this.props.currentUser) {
-            return (
-                <Redirect to="/home"/>
-            )
+        if (this.props.loggedIn) {
+            return <Redirect to="/home" />;
         }
 
+        else {
         return (
             <form
                 className="login-form"
                 onSubmit={this.props.handleSubmit(values =>
                     this.onSubmit(values)
-                )}>
+                )}>                
                 {error}
+                <fieldset>
                 <label htmlFor="username">Username</label>
                 <Field
                     component={Input}
@@ -54,16 +55,31 @@ export class SignInForm extends React.Component {
                     id="password"
                     validate={[required, nonEmpty]}
                 />
-                <button disabled={this.props.pristine || this.props.submitting}>
+                <button 
+                    type="submit" 
+                    disabled={this.props.pristine || this.props.submitting}>
                     Log in
                 </button>
-                <Link to="/register">New user? Sign Up</Link>
+                </fieldset>
             </form>
         );
     }
 }
+    }
+
 
 export default reduxForm({
-    form: 'login-form',
-    onSubmitFail: (errors, dispatch) => dispatch(focus('login-form', 'username'))
+    form: 'sign-in',
+    onSubmitFail: (errors, dispatch) => dispatch(focus('sign-in', 'username'))
 })(SignInForm);
+
+      // if (this.props.loading === true){
+        //     console.log("loading");
+
+        // }
+
+        // if (this.props.loggedIn) {
+        //     return (
+        //         <Redirect to="/home"/>
+        //     )
+        // }
