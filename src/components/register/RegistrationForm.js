@@ -1,11 +1,13 @@
 import React from 'react';
 import {Field, reduxForm, focus} from 'redux-form';
-import {registerUser} from '../actions/users';
-import {login} from '../actions/auth';
-import Input from './Input';
-import {required, nonEmpty, matches, length, isTrimmed} from '../validators';
+import {registerUser} from '../../actions/users';
+import {login} from '../../actions/auth';
+import Input from '../common/Input';
+import {Link} from 'react-router-dom';
+import {required, nonEmpty, matches, length, isTrimmed} from '../../validators';
 const passwordLength = length({min: 6, max: 72});
 const matchesPassword = matches('password');
+
 
 
 export class RegistrationForm extends React.Component {
@@ -59,12 +61,12 @@ export class RegistrationForm extends React.Component {
                     disabled={this.props.pristine || this.props.submitting}>
                     Register & Sign In
                 </button>
+                <button><Link to="/">Cancel</Link></button>
                 </fieldset>
             </form>
         );
     }
 }
-
 export default reduxForm({
     form: 'registration',
     onSubmitFail: (errors, dispatch) =>

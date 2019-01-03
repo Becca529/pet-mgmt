@@ -2,16 +2,22 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Route, withRouter, Switch} from 'react-router-dom';
 
-import LandingPage from './LandingPage';
-import RegistrationPage from './RegistrationPage';
-import SignInForm from './SignInForm';
-// import PetProfileForm from './PetProfileForm';
-import HomePage from './HomePage';
-import Footer from './Footer';
-import TopNavBar from './TopNavBar';
-import {refreshAuthToken} from '../actions/auth';
-// import './App.css';
+import Footer from './common/Footer';
+import Header from './common/Header';
+import LandingPage from './landing/LandingPage';
+import RegistrationPage from './register/RegistrationPage';
+// import LoginPage from './login/LoginPage';
+ import LoginForm from './login/LoginForm';
 
+import HomePage from './home/HomePage';
+import VetPage from './vet/VetPage';
+import MedicalPage from './medical/MedicalPage';
+import PetSittingPage from './pet-sitting/PetSittingPage';
+
+import PetProfileForm from './home/PetProfileForm';
+
+import {refreshAuthToken} from '../actions/auth';
+import './App.css';
 
 
 export class App extends React.Component {
@@ -46,17 +52,24 @@ export class App extends React.Component {
 
   render() {
       return (
-          <div className="app">
-              <TopNavBar />
+          <div className="app-container">
+              <Header />
+              <div className="main">
                 <Route exact path="/" component={LandingPage} />
-                <Route exact path="/home" component={HomePage} />
-                <Route exact path="/signin" component={props => <SignInForm {...props} />} />
+                <Route path="/home" component={HomePage} />
                 <Route exact path="/register" component={RegistrationPage} />
+                <Route exact path="/login" component={LoginForm} />
+                <Route exact path="/pet-profile" component={PetProfileForm} />
+                <Route exact path="/vet" component={VetPage} />
+                <Route exact path="/medical" component={MedicalPage} />
+                <Route exact path="/pet-sitting" component={PetSittingPage} />
+                </div>
               <Footer />
           </div>
       );
   }
 }
+
 
 const mapStateToProps = state => ({
   hasAuthToken: state.auth.authToken !== null,

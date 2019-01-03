@@ -1,86 +1,44 @@
 import React from 'react';
 import {reduxForm, Field, SubmissionError, focus} from 'redux-form';
-import Input from './Input';
-import {required, nonEmpty } from '../validators';
+import Input from '../common/Input';
+import {required, nonEmpty } from '../../validators';
+import {createPetProfile} from '../../actions/petprofile';
+
+import {Redirect, Link} from 'react-router-dom';
+
+
 
 export class PetProfileForm extends React.Component {
+   
     onSubmit(values) {
         const {petName, breed, sex, birthdate, personality, likes, dislikes, physicalDescription, weight} = values;
         const pet = {petName, breed, sex, birthdate, personality, likes, dislikes, physicalDescription, weight};
-        // console.log(values);
+        console.log(pet);
         console.log("submit button pushed");
-        return fetch('/api/pets', {
-            method: 'POST',
-            body: JSON.stringify(pet),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => {
-                if (!res.ok) {
-                    if (
-                        res.headers.has('content-type') &&
-                        res.headers
-                            .get('content-type')
-                            .startsWith('application/json')
-                    ) {
-                        // It's a nice JSON error returned by us, so decode it
-                        return res.json().then(err => Promise.reject(err));
-                    }
-                    // It's a less informative error returned by express
-                    return Promise.reject({
-                        code: res.status,
-                        message: res.statusText
-                    });
-                }
-                return;
-            })
-            .then(() => console.log('Submitted with values', values))
-            .catch(err => {
-                const {reason, message, location} = err;
-                if (reason === 'ValidationError') {
-                    // Convert ValidationErrors into SubmissionErrors for Redux Form
-                    return Promise.reject(
-                        new SubmissionError({
-                            [location]: message
-                        })
-                    );
-                }
-                return Promise.reject(
-                    new SubmissionError({
-                        _error: 'Error submitting message'
-                    })
-                );
-            });
+        return this.props
+            .dispatch(createPetProfile(pet))
     }
 
-    render() {
-        let successMessage;
-        if (this.props.submitSucceeded) {
-            successMessage = (
-                <div className="message message-success">
-                    Pet Profile submitted successfully
-                </div>
-            );
-        }
 
+    render() {
+      
         let errorMessage;
         if (this.props.error) {
             errorMessage = (
                 <div className="message message-error">{this.props.error}</div>
             );
         }
+        if(!this.props.petName)
 
         return (
             <form
                 onSubmit={this.props.handleSubmit(values =>
                     this.onSubmit(values)
                 )}>
-                {successMessage}
                 {errorMessage}
-                 {/* PHOTO */}
                  <fieldset>
-                    <legend>Create a New Pet Profile - {this.props.username}</legend>
+                    <legend>Create a New Pet Profile</legend>
+                      {/* PHOTO */}
                 <Field
                     name="petName"
                     type="text"
@@ -106,6 +64,7 @@ export class PetProfileForm extends React.Component {
                     component={Input}
                     label="Sex"
                 />
+                
                  <Field
                     name="birthdate"
                     type="date"
@@ -143,16 +102,18 @@ export class PetProfileForm extends React.Component {
                     component={Input}
                     label="Weight"
                 />
-                <button
-                    type="submit">
-                    {/* disabled={this.props.pristine || this.props.submitting}> */}
-                    Create Profile
+                <button 
+                    type="submit"
+                    disabled={this.props.pristine || this.props.submitting}>
+                    Submit
                 </button>
+                <button><Link to="/home">Cancel</Link></button>
                 </fieldset>
             </form>
         );
     }
 }
+
 
 export default reduxForm({
     form: 'pet-profile',

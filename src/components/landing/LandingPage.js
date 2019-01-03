@@ -1,5 +1,7 @@
 import React from 'react';
 import './LandingPage.css';
+import LoginForm from '../login/LoginForm';
+
 import {connect} from 'react-redux';
 import {Link, Redirect} from 'react-router-dom';
 
@@ -13,8 +15,9 @@ export function LandingPage(props) {
       <div className="welcome-box">
         <h1>[Pet Management Name]</h1>
         <h2>Manage everything pet in one place</h2>
-        <Link to="/signin" className="signed-out-link" >Sign In</Link>
-        <Link className="landing-links" to="/register">Get Started</Link>
+        <LoginForm />
+        <Link to="/login" className="btn-link btn-primary btn-lg" >Sign In</Link>
+        <Link className="btn-link btn-primary btn-lg" to="/register">Get Started</Link>
       </div>
       <section className="feature-area">
         <div className="feature-box">
