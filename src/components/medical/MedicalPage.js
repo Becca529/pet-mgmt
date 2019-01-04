@@ -1,13 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import requiresLogin from '../common/RequiresLogin';
-import {fetchDashboard} from '../../actions/dashboard';
+// import {fetchDashboard} from '../../actions/fetchPetProfiles';
 import {Link} from 'react-router-dom';
 
 
 export class MedicalPage extends React.Component {
     componentDidMount() {
-        this.props.dispatch(fetchDashboard());
+        // this.props.dispatch(fetchDashboard());
     }
 
   

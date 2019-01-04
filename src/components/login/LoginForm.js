@@ -4,7 +4,7 @@ import Input from '../common/Input';
 import {login} from '../../actions/auth';
 import {required, nonEmpty} from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
-
+import './LoginForm.css';
 
 
 export class LoginForm extends React.Component {
@@ -69,14 +69,3 @@ export default reduxForm({
     form: 'login',
     onSubmitFail: (errors, dispatch) => dispatch(focus('login', 'username'))
 })(LoginForm);
-
-      // if (this.props.loading === true){
-        //     console.log("loading");
-
-        // }
-
-        // if (this.props.loggedIn) {
-        //     return (
-        //         <Redirect to="/home"/>
-        //     )
-        // }

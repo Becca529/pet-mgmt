@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import requiresLogin from '../common/RequiresLogin';
 
 
-export class PetProfile extends React.Component {
+export class PetProfileCard extends React.Component {
 
     render() {
 
@@ -12,7 +12,7 @@ export class PetProfile extends React.Component {
             <div className="pet-profile w3-card">
             <img className="pet-profile-img" src="img_avatar.png" alt="pet"/>
             <div className="container">
-                <h4>Name</h4> 
+                <h4>Name - </h4> 
                 <p>Type</p>
                 <div className="pet-profile-nav">
                     <Link className="btn-link" to="/add">Profile</Link>
@@ -36,4 +36,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default requiresLogin()(connect(mapStateToProps)(PetProfile));
+export default requiresLogin()(connect(mapStateToProps)(PetProfileCard));

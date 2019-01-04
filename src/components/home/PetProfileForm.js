@@ -1,11 +1,10 @@
 import React from 'react';
-import {reduxForm, Field, SubmissionError, focus} from 'redux-form';
+import {reduxForm, push, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
-import {createPetProfile} from '../../actions/petprofile';
-
+import {createPetProfile} from '../../actions/createPetProfile';
 import {Redirect, Link} from 'react-router-dom';
-
+import {connect} from 'react-redux';
 
 
 export class PetProfileForm extends React.Component {
@@ -17,18 +16,26 @@ export class PetProfileForm extends React.Component {
         console.log("submit button pushed");
         return this.props
             .dispatch(createPetProfile(pet))
+            // .dispatch(push('/home'));
     }
 
 
     render() {
-      
+
+        if(this.props.shouldRedirect.petprofile.shouldRedirect){
+            console.log(this.props.shouldRedirect.petprofile.shouldRedirect)
+            return(
+                 <Redirect to="/home"/>
+            )
+        }
+
         let errorMessage;
         if (this.props.error) {
             errorMessage = (
                 <div className="message message-error">{this.props.error}</div>
             );
         }
-        if(!this.props.petName)
+
 
         return (
             <form
@@ -36,6 +43,7 @@ export class PetProfileForm extends React.Component {
                     this.onSubmit(values)
                 )}>
                 {errorMessage}
+                {/* <p>BLAH {this.props.shouldRedirect}</p> */}
                  <fieldset>
                     <legend>Create a New Pet Profile</legend>
                       {/* PHOTO */}
@@ -114,9 +122,22 @@ export class PetProfileForm extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        shouldRedirect: state
+    };
+};
+
+PetProfileForm = connect(
+    mapStateToProps
+)(PetProfileForm);
+
 
 export default reduxForm({
     form: 'pet-profile',
-    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('pet-profile', Object.keys(errors)[0]))
+    onSubmitFail: (errors, dispatch) => dispatch(focus('pet-profile', 'username'))
 })(PetProfileForm);
+
+
+
+

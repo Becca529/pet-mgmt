@@ -1,32 +1,44 @@
-import {CREATE_PET_PROFILE_SUCCESS,CREATE_PET_PROFILE_ERROR} from '../actions/petprofile';
-import {FETCH_DASHBOARD_SUCCESS, FETCH_DASHBOARD_ERROR} from '../actions/dashboard'
+import {CREATE_PET_PROFILE_SUCCESS,CREATE_PET_PROFILE_ERROR} from '../actions/createPetProfile';
+import {FETCH_PETS_SUCCESS, FETCH_PETS_ERROR} from '../actions/fetchPetProfiles'
 
 
 const initialState = {
-    data: '',
-    error: null
+    petlist: [],
+    error: null,
+    loading: false,
+    shouldRedirect: false
 };
 
 export default function reducer(state = initialState, action) {
-    if (action.type === CREATE_PET_PROFILE_SUCCESS) {
-        return Object.assign({}, state, {
-            petProfiledata: action.payload,
-            error: null
-        });
-    } else if (action.type === CREATE_PET_PROFILE_ERROR) {
-        return Object.assign({}, state, {
-            error: action.error
-        });
+    switch(action.type) {
+        case CREATE_PET_PROFILE_SUCCESS: 
+            return Object.assign({}, state, {
+                petlist: [...state.pets, action.payload],
+                error: null,
+                shouldRedirect: true
+            });
+
+        case CREATE_PET_PROFILE_ERROR: 
+            return Object.assign({}, state, {
+                error: action.error,
+            });
     
-    } else if (action.type === FETCH_DASHBOARD_SUCCESS) {
-        return Object.assign({}, state, {
-            error: action.error
-        });
-        
-    } else if (action.type === FETCH_DASHBOARD_ERROR) {
-        return Object.assign({}, state, {
-            error: action.error
-        });
+        case FETCH_PETS_SUCCESS: 
+            return Object.assign({}, state, {
+               ...state,
+               loading: false,
+               petlist: action.payload.pets
+            });
+
+        case FETCH_PETS_ERROR: 
+            return Object.assign({}, state, {
+                ...state,
+                error: action.payload.error,
+                loading: false,
+                petlist: []
+            });
+
+        default:
+            return state;
     }
-    return state;
 }

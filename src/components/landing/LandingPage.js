@@ -16,8 +16,6 @@ export function LandingPage(props) {
         <h1>[Pet Management Name]</h1>
         <h2>Manage everything pet in one place</h2>
         <LoginForm />
-        <Link to="/login" className="btn-link btn-primary btn-lg" >Sign In</Link>
-        <Link className="btn-link btn-primary btn-lg" to="/register">Get Started</Link>
       </div>
       <section className="feature-area">
         <div className="feature-box">

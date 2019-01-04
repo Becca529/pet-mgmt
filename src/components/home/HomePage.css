@@ -1,23 +1,41 @@
-section {
+/* section {
   min-height: 200px;
   padding: 30px 15px;
   background-color: #bbb;
-}
+} */
 
-section:nth-child(even) {
+/* section:nth-child(even) {
   background-color: #ddd;
-}
+} */
 
 p {
-  margin: 0 auto;
+  /* margin: 0 auto; */
   max-width: 650px;
 }
 
-p + p {
+/* p + p {
   margin-top: 15px;
-}
+} */
 
 .pet-profile-list {
   display: flex;
   flex-wrap: wrap;
+  background-color: lightgray;
 }
+
+.title {
+  font-size: 15px;
+}
+.add-new-profile{
+  text-align: right;
+}
+.divider {
+  background-color: lightgrey;
+  height: 60px;
+}
+
+.dashboard{
+  color: white;
+  background-color: darkgray
+}
+
