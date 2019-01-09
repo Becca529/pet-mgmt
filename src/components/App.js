@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Route, withRouter, Switch} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 
 import Footer from './common/Footer';
 import Header from './common/Header';
@@ -10,9 +10,9 @@ import RegistrationPage from './register/RegistrationPage';
  import LoginForm from './login/LoginForm';
 
 import HomePage from './home/HomePage';
-import VetPage from './vet/VetPage';
+import VetForm from './vet/ VetForm';
 import VaccineForm from './medical/VaccineForm';
-import PetSittingPage from './pet-sitting/PetSittingPage';
+import FoodForm from './pet-sitting/FoodForm';
 
 import PetProfileForm from './home/PetProfileForm';
 
@@ -61,9 +61,9 @@ export class App extends React.Component {
                 <Route exact path="/login" component={LoginForm} />
                 <Route path="/pet-profile" component={PetProfileForm} />
                 <Route path="/pet-profile/:petId" component={PetProfileForm} />
-                <Route path="/vet/:petId" component={VetPage} />
+                <Route path="/vet/:petId" component={VetForm} />
                 <Route path="/medical/:petId" component={VaccineForm} />
-                <Route path="/pet-sitting/:petId" component={PetSittingPage} />
+                <Route path="/pet-sitting/:petId" component={FoodForm} />
                 </div>
               <Footer />
           </div>

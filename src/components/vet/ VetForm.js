@@ -3,13 +3,25 @@ import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
+import {addPetSubdocument} from '../../actions/createPetProfile';
+import {connect} from 'react-redux';
+
+
 
 
 export class VetForm extends React.Component {
     onSubmit(values) {
+        let type = "vet"
+        const {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor} = values;
+        const vetInfo = {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor};
+        const petid = this.props.match.params.petId;
+        console.log(type);
+        return this.props
+            .dispatch(addPetSubdocument(vetInfo, petid, type))
     }
+
     render() {
-        if (this.props.submitSucceeded) {
+        if (this.props.redirect) {
             return (
                 <Redirect to="/home"/>
             );
@@ -97,6 +109,20 @@ export class VetForm extends React.Component {
         );
     }
 }
+const mapStateToProps = (state, props) => {
+    const petId = props.match.params.petId;
+    console.log(state);
+     return {
+        redirect: state.petprofile.redirect,
+        currentPet: state.petprofile.currentPet,
+        loading: state.petprofile.loading,
+        error: state.petprofile.error,
+    };
+};
+
+VetForm = connect(
+    mapStateToProps
+)(VetForm);
 
 export default reduxForm({
     form: 'vet',

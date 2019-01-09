@@ -1,15 +1,26 @@
 import React from 'react';
 import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
-// import {required, nonEmpty } from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
+import {addPetSubdocument} from '../../actions/createPetProfile';
+import {connect} from 'react-redux';
+
+
 
 
 export class FoodForm extends React.Component {
     onSubmit(values) {
+        let type = "pet-sitting-food"
+        const {foodType, foodQuantity, foodFrequency, notes} = values;
+        const foodInfo = {foodType, foodQuantity, foodFrequency, notes};
+        const petid = this.props.match.params.petId;
+        console.log(petid);
+        return this.props
+            .dispatch(addPetSubdocument(foodInfo, petid, type))
     }
+
     render() {
-        if (this.props.submitSucceeded) {
+        if (this.props.redirect) {
             return (
                 <Redirect to="/home"/>
             );
@@ -66,6 +77,21 @@ export class FoodForm extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state, props) => {
+    const petId = props.match.params.petId;
+    console.log(state);
+     return {
+        redirect: state.petprofile.redirect,
+        currentPet: state.petprofile.currentPet,
+        loading: state.petprofile.loading,
+        error: state.petprofile.error,
+    };
+};
+
+FoodForm = connect(
+    mapStateToProps
+)(FoodForm);
 
 export default reduxForm({
     form: 'food',

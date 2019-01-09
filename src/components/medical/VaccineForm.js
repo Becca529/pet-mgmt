@@ -88,6 +88,8 @@ const mapStateToProps = (state, props) => {
      return {
         redirect: state.petprofile.redirect,
         currentPet: state.petprofile.currentPet,
+        loading: state.petprofile.loading,
+        error: state.petprofile.error,
     };
 };
 

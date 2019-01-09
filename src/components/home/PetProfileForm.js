@@ -11,7 +11,7 @@ const editPetProfile = createPetProfile;
 export class PetProfileForm extends React.Component {
    
     componentDidMount() {
-        console.log(this.props.currentPet);
+        // console.log(this.props.currentPet);
         // console.log(this.props.petName);
         // console.log(this.props.currentPet.petName);
         this.handleInitialize();
@@ -55,17 +55,14 @@ export class PetProfileForm extends React.Component {
 
 
         return (
-            // {petProfileForm}
             <form
             onSubmit={this.props.handleSubmit(values =>
                 this.onSubmit(values)
             )}
             >
             {errorMessage}
-            <p>Props-{this.props.redirect}</p>
              <fieldset>
                 <legend>Create a New Pet Profile</legend>
-                  {/* PHOTO */}
             <Field
                 name="petName"
                 type="text"
@@ -143,15 +140,14 @@ export class PetProfileForm extends React.Component {
 
 const mapStateToProps = (state, props) => {
     const petId = props.match.params.petId;
-    console.log(state);
      return {
         redirect: state.petprofile.redirect,
         currentPet: state.petprofile.currentPet,
         // petName: state.petprofile.currentPet.petName,
         petID: petId,
-        initialValues: getInitialValues(state.petprofile.currentPet)
-
-
+        initialValues: getInitialValues(state.petprofile.currentPet),
+        loading: state.petprofile.loading,
+        error: state.petprofile.error
     };
 };
 
