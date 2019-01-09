@@ -8,4 +8,7 @@
     padding: 2px 16px;
   }
 
-  
+  .pet-profile-nav {
+    list-style: none;
+    text-align: center;
+    }

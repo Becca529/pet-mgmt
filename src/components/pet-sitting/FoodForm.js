@@ -10,13 +10,12 @@ import {connect} from 'react-redux';
 
 export class FoodForm extends React.Component {
     onSubmit(values) {
-        let type = "pet-sitting-food"
+        let type = 'pet-sitting-food'
         const {foodType, foodQuantity, foodFrequency, notes} = values;
-        const foodInfo = {foodType, foodQuantity, foodFrequency, notes};
+        const foodInfo = {foodType, foodQuantity, foodFrequency, notes, type};
         const petid = this.props.match.params.petId;
-        console.log(petid);
         return this.props
-            .dispatch(addPetSubdocument(foodInfo, petid, type))
+            .dispatch(addPetSubdocument(foodInfo, petid))
     }
 
     render() {
@@ -80,7 +79,6 @@ export class FoodForm extends React.Component {
 
 const mapStateToProps = (state, props) => {
     const petId = props.match.params.petId;
-    console.log(state);
      return {
         redirect: state.petprofile.redirect,
         currentPet: state.petprofile.currentPet,

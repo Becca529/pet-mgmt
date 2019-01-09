@@ -15,11 +15,8 @@ export class VaccineForm extends React.Component {
         const {vaccineName, dateAdministered, nextDueDate, notes} = values;
         const vaccine = {vaccineName, dateAdministered, nextDueDate, notes , type};
         const petid = this.props.match.params.petId;
-        console.log(vaccine);
-        console.log(petid);
-        console.log(this.props.state);
         return this.props
-            .dispatch(addPetSubdocument(vaccine, petid, type))
+            .dispatch(addPetSubdocument(vaccine, petid))
     }
 
     render() {
@@ -84,7 +81,6 @@ export class VaccineForm extends React.Component {
 
 const mapStateToProps = (state, props) => {
     const petId = props.match.params.petId;
-    console.log(state);
      return {
         redirect: state.petprofile.redirect,
         currentPet: state.petprofile.currentPet,

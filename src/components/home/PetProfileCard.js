@@ -16,8 +16,8 @@ const {pet} = props
                 <h4>{pet.petName} </h4> 
                 <p>{pet.type} </p>
                 <ul className="pet-profile-nav">
-                {/* <li><Link className="btn-link" onClick={props.onClick.bind(this, pet)} to={`/pet-profile/${pet.id}`}>Pet Profile</Link></li> */}
-                    <li><Link className="btn-link" to={`/pet-profile/${pet.id}`}>Pet Profile</Link></li>
+                <li><Link className="btn-link" onClick={props.onClick.bind(this, pet)} to={`/pet-profile/${pet.id}`}>Pet Profile</Link></li>
+                    {/* <li><Link className="btn-link" to={`/pet-profile/${pet.id}`}>Pet Profile</Link></li> */}
                     <li><Link className="btn-link" to={`/vet/${pet.id}`}>Vet</Link></li>
                     <li><Link className="btn-link" to={`/medical/${pet.id}`}>Vaccines</Link></li>
                     <li><Link className="btn-link" to={`/pet-sitting/${pet.id}`}>Pet Sitting</Link></li>

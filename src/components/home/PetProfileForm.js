@@ -32,11 +32,15 @@ export class PetProfileForm extends React.Component {
     }
 
     handleInitialize() {
-        const initData = {
-            // petName: this.props.currentPet.petName,
-        }
-        this.props.initialize(initData);
+        // const initData = {};
+
+        // // for (let i=0; i<this.props.currentPet.length; i++){
+        // //         initData[`${this.props.type}-${i}`] = this.props.entries[i].text;
+        // // }
+        // //     // petName: this.props.currentPet.petName,
+        // // this.props.initialize(initData);
       }
+    
 
     render() {
         if(this.props.redirect){
@@ -51,7 +55,6 @@ export class PetProfileForm extends React.Component {
                 <div className="message message-error">{this.props.error}</div>
             );
         }   
-        // const {petProps} = this.props.location.state.pet
 
 
         return (
@@ -61,6 +64,7 @@ export class PetProfileForm extends React.Component {
             )}
             >
             {errorMessage}
+            <p>hello{this.props.currentPet2}</p>
              <fieldset>
                 <legend>Create a New Pet Profile</legend>
             <Field
@@ -69,7 +73,8 @@ export class PetProfileForm extends React.Component {
                 component={Input}
                 label="Pet Name"
                 validate={[required, nonEmpty]}
-                // value={this.props.pet}
+                
+
             />
             <Field
                 name="type"
@@ -134,17 +139,18 @@ export class PetProfileForm extends React.Component {
             </button>
             <button><Link to="/home">Cancel</Link></button>
             </fieldset>
-            </form>        );
+            </form>        
+            );
     }
 }
 
 const mapStateToProps = (state, props) => {
     const petId = props.match.params.petId;
+    // console.log(this.props.currentPet.)
      return {
         redirect: state.petprofile.redirect,
         currentPet: state.petprofile.currentPet,
-        // petName: state.petprofile.currentPet.petName,
-        petID: petId,
+        currentPet2: state.petprofile,
         initialValues: getInitialValues(state.petprofile.currentPet),
         loading: state.petprofile.loading,
         error: state.petprofile.error

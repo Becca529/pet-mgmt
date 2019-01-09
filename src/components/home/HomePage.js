@@ -17,7 +17,6 @@ export class HomePage extends React.Component {
         console.log(selectedPet);
         console.log("getting back to onclick");
         this.props.dispatch(setCurrentPet(selectedPet));
-        console.log(this.state);
 
     //    setCurrentPet(selectedPet);
         // setPetProfile(selectedPet)
