@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import Header from '../common/Header';
 import './HomePage.css';
-
+import Spinner from 'react-spinkit';
 import requiresLogin from '../common/RequiresLogin';
-import {fetchPetProfiles} from '../../actions/fetchPetProfiles';
+import {fetchPetProfiles, setCurrentPet} from '../../actions/fetchPetProfiles';
 import {Link} from 'react-router-dom';
 import PetProfileCard from './PetProfileCard';
 
@@ -14,58 +13,88 @@ export class HomePage extends React.Component {
         this.props.dispatch(fetchPetProfiles());
     }
 
-  
+    onClick = (selectedPet) => {
+        console.log(selectedPet);
+        console.log("getting back to onclick");
+        this.props.dispatch(setCurrentPet(selectedPet));
+        console.log(this.state);
+
+    //    setCurrentPet(selectedPet);
+        // setPetProfile(selectedPet)
+        }
+
+
+
+    renderPetList() {
+        const { error, loading, pets, selectedPet } = this.props;
+
+        if (loading) {
+            return <Spinner spinnername="circle" fadeIn='none'/>;
+        }
+
+        if (error) {
+            return <strong>{this.props.error}</strong>;
+        }
+
+        // if(selectedPet !== null){
+        //     console.log(selectedPet);
+        // //     return <div></div>
+        // }
+
+        const petList = pets.map((pet) => (
+            <li key={pet.id}>
+                <PetProfileCard onClick={this.onClick} pet={pet}></PetProfileCard>
+            </li>
+        ));
+
+        // const petList = ({pets, setPet}) =>
+        //     pets.map((pet, index) =>
+        //     <li key={pet.id}>
+        //         <PetProfileCard onClick={setPet(index +1)} pet={pet}></PetProfileCard>
+        //     </li>
+        //     )
+
+        return <ul className="pet-list">{petList}</ul>;
+    }
+       
+    
 
     render() {
-        // const { error, loading, pets } = this.props;
-        // const petProfiles = this.props.petprofile.pets.map((petProfile, index)=> (
-        //          <li className="pet-profile-wrapper" key= {index}>
-        //             <PetProfileCard index={index} {...petProfile} />
-        //         </li>
-        // ))
 
-
-        // if (error) {
-        //     return <div>Error! {error.message}</div>;
-        // }
-    
-        // if (loading) {
-        //     return <div>Loading...</div>;
-        // }
-        // this.props.petlist.petprofile.petlist
         return (
             <div className="home-page">
-                <div className="divider">divider image
-                <p>bah- {this.props.petlist.petprofile.petlist}</p>
-                {/* <p>bah- {this.props.pets.petlist}</p> */}
-                <p>bah- {this.props.loading.petprofile.loading}</p>
-
-                </div>
+                <div className="divider">divider image</div>
                 <div className="dashboard">
                     <h1 className="page-title">My Pet Profiles - {this.props.username}</h1>
                     <Link className="add-new-profile btn-link" to="/pet-profile">Add New Pet Profile</Link>
-                    <ul>
-                        {/* <li>{petProfiles}</li> */}
-                        {/* {pets.map(pet =>
-                            <li key={pet.id}>{pet.petName}</li>
-                        )} */}
-                    </ul>
+                    <div className="pet-profile-list">
+                        {this.renderPetList()}
+                    </div>
                 </div>
             </div>
         );
         }
     }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        setCurrentPet: (pet) => dispatch(setCurrentPet(pet)),
+    }
+}
+
 
 const mapStateToProps = state => {
+    console.log(state);
     const {currentUser} = state.auth;
     return {
         username: state.auth.currentUser.username,
-        name: `${currentUser.firstName} ${currentUser.lastName}`,
-        petlist: state.petprofile.petlist,
+        pets: state.petprofile.petList,
         loading: state.petprofile.loading,
-        error: state.petprofile.error
-    };
-};
+        error: state.petprofile.error,
+        selectedPet: state.petprofile.selectedPet
+    }
+}
+    
 
-export default requiresLogin()(connect(mapStateToProps)(HomePage));
+
+export default requiresLogin()(connect(mapStateToProps, mapDispatchToProps)(HomePage));

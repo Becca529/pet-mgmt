@@ -3,13 +3,27 @@ import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
+import {addPetSubdocument} from '../../actions/createPetProfile';
+import {connect} from 'react-redux';
+
+
 
 
 export class VaccineForm extends React.Component {
     onSubmit(values) {
+        let type = "vaccine"
+        const {vaccineName, dateAdministered, nextDueDate, notes} = values;
+        const vaccine = {vaccineName, dateAdministered, nextDueDate, notes , type};
+        const petid = this.props.match.params.petId;
+        console.log(vaccine);
+        console.log(petid);
+        console.log(this.props.state);
+        return this.props
+            .dispatch(addPetSubdocument(vaccine, petid, type))
     }
+
     render() {
-        if (this.props.submitSucceeded) {
+        if (this.props.redirect) {
             return (
                 <Redirect to="/home"/>
             );
@@ -56,12 +70,6 @@ export class VaccineForm extends React.Component {
                     component={Input}
                     label="Additional Notes"
                 />
-                 <Field
-                    name="status"
-                    type="text"
-                    component={Input}
-                    label="Status"
-                />
                 <button 
                     type="submit"
                     disabled={this.props.pristine || this.props.submitting}>
@@ -73,6 +81,21 @@ export class VaccineForm extends React.Component {
         );
     }
 }
+
+const mapStateToProps = (state, props) => {
+    const petId = props.match.params.petId;
+    console.log(state);
+     return {
+        redirect: state.petprofile.redirect,
+        currentPet: state.petprofile.currentPet,
+    };
+};
+
+VaccineForm = connect(
+    mapStateToProps
+)(VaccineForm);
+
+
 
 export default reduxForm({
     form: 'vaccine',

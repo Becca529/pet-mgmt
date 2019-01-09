@@ -13,14 +13,19 @@ p {
   max-width: 650px;
 }
 
-/* p + p {
-  margin-top: 15px;
-} */
 
 .pet-profile-list {
+  background-color: lightgray;
+
+}
+
+.pet-list {
   display: flex;
   flex-wrap: wrap;
-  background-color: lightgray;
+  justify-content: space-around;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
 }
 
 .title {
