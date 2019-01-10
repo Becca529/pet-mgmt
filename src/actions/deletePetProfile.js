@@ -41,11 +41,11 @@ export const deletePetProfile = (petid) => (dispatch, getState) => {
 };
 
 
-export const deletePetSubdocument = (subdDocId, type) => (dispatch, getState) => {
+export const deletePetSubdocument = (subDocId, petId) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/pets/details/${subdDocId}`, {
+    // return fetch(`${API_BASE_URL}/pets/sub/${subDocId}`, {
+    return fetch(`${API_BASE_URL}/pets/${petId}/vet/${subDocId}`, {
         method: 'DELETE',
-        body: JSON.stringify(subdDocId),
         headers: {
             // Provide our auth token as credentials
             Authorization: `Bearer ${authToken}`,

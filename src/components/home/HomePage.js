@@ -83,8 +83,8 @@ const mapDispatchToProps = dispatch => {
 
 
 const mapStateToProps = state => {
-    console.log(state);
     const {currentUser} = state.auth;
+    console.log(state);
     return {
         username: state.auth.currentUser.username,
         pets: state.petprofile.petList,

@@ -55,10 +55,10 @@ export const createPetProfile = (data) => (dispatch, getState) => {
 };
 
 
-export const addPetSubdocument = (data, petID) => (dispatch, getState) => {
+export const addPetSubdocument = (data, petId) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
     dispatch(createPetSubdocumentBegin());
-    return fetch(`${API_BASE_URL}/pets/${petID}`, {
+    return fetch(`${API_BASE_URL}/pets/${petId}/vet`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {

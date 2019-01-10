@@ -14,18 +14,22 @@ export class VetForm extends React.Component {
         let type = "vet"
         const {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor} = values;
         const vetInfo = {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor, type};
-        const petid = this.props.match.params.petId;
+        const petId = this.props.currentPet.id;
         return this.props
-            .dispatch(addPetSubdocument(vetInfo, petid))
+            .dispatch(addPetSubdocument(vetInfo, petId))
     }
 
-    render() {
+ 
+    render() 
+    {
+        const petId = this.props.match.params.petId;
         if (this.props.redirect) {
             return (
-                <Redirect to="/home"/>
+                <Redirect to={`/pet-profile/${petId}`}/>
             );
-            
         }
+
+     
 
         let errorMessage;
         if (this.props.error) {
@@ -102,13 +106,13 @@ export class VetForm extends React.Component {
                     disabled={this.props.pristine || this.props.submitting}>
                     Submit
                 </button>
-                <button><Link to="/home">Cancel</Link></button>
+                <button><Link to={`/pet-profile/${petId}`}>Cancel</Link></button>
                 </fieldset>
             </form>
         );
     }
 }
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     // const petId = props.match.params.petId;
      return {
         redirect: state.petprofile.redirect,
@@ -127,3 +131,6 @@ export default reduxForm({
     onSubmitFail: (errors, dispatch) =>
         dispatch(focus('vet', Object.keys(errors)[0]))
 })(VetForm);
+
+// onSubmitSuccess : (result, dispatch) => 
+//         dispatch(this.context.history.push('/pet-profile/')),

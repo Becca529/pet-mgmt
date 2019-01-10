@@ -9,18 +9,9 @@ const editPetProfile = createPetProfile;
 // const {pet} = props.location.state
 
 export class PetProfileForm extends React.Component {
-   
-    componentDidMount() {
-        // console.log(this.props.currentPet);
-        // console.log(this.props.petName);
-        // console.log(this.props.currentPet.petName);
-        this.handleInitialize();
-      }
-
-
     onSubmit(values) {
-        const {petName, breed, sex, birthdate, personality, likes, dislikes, physicalDescription, weight} = values;
-        const pet = {petName, breed, sex, birthdate, personality, likes, dislikes, physicalDescription, weight};
+        const {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight} = values;
+        const pet = {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight};
         console.log(pet);
         console.log("submit button pushed");
         const dispatched = this.props.pet ? editPetProfile : createPetProfile
@@ -31,16 +22,6 @@ export class PetProfileForm extends React.Component {
             .dispatch(dispatched(pet))
     }
 
-    handleInitialize() {
-        // const initData = {};
-
-        // // for (let i=0; i<this.props.currentPet.length; i++){
-        // //         initData[`${this.props.type}-${i}`] = this.props.entries[i].text;
-        // // }
-        // //     // petName: this.props.currentPet.petName,
-        // // this.props.initialize(initData);
-      }
-    
 
     render() {
         if(this.props.redirect){
@@ -48,6 +29,10 @@ export class PetProfileForm extends React.Component {
                  <Redirect to="/home"/>
             )
         }
+        if (this.props.currentPet){
+            // let buttonType = "Edit"
+        }
+
 
         let errorMessage;
         if (this.props.error) {
@@ -64,9 +49,8 @@ export class PetProfileForm extends React.Component {
             )}
             >
             {errorMessage}
-            <p>hello{this.props.currentPet2}</p>
              <fieldset>
-                <legend>Create a New Pet Profile</legend>
+                <legend>Pet Information</legend>
             <Field
                 name="petName"
                 type="text"
@@ -134,9 +118,7 @@ export class PetProfileForm extends React.Component {
             />
             <button 
                 type="submit"
-                disabled={this.props.pristine || this.props.submitting}>
-                Submit
-            </button>
+                disabled={this.props.pristine || this.props.submitting}>Submit</button>
             <button><Link to="/home">Cancel</Link></button>
             </fieldset>
             </form>        
@@ -144,37 +126,40 @@ export class PetProfileForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state, props) => {
-    const petId = props.match.params.petId;
-    // console.log(this.props.currentPet.)
-     return {
-        redirect: state.petprofile.redirect,
-        currentPet: state.petprofile.currentPet,
-        currentPet2: state.petprofile,
-        initialValues: getInitialValues(state.petprofile.currentPet),
-        loading: state.petprofile.loading,
-        error: state.petprofile.error
-    };
-};
 
-const getInitialValues = (currPet) => {
-    if (currPet) {
-        const { petName, breed, type } = currPet;
-        return { petName, breed, type };
+const getInitialValues = (currentPet) => {
+    if (currentPet) {
+        const { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription  } = currentPet;
+        return { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription };
     }
-    return { petName: '', breed: '', type: ''};
+    // return { petName: '', breed: '', type: '', sex: '', birthdate: '', personality: '', likes: '', dislikes: '', weight: '', physicalDescription: ''};
 }
 
-PetProfileForm = connect(
-    mapStateToProps
-)(PetProfileForm);
 
-
-export default reduxForm({
-    form: 'pet-profile',
+PetProfileForm = reduxForm({
+    form: 'pet-profile', // a unique identifier for this form
     onSubmitFail: (errors, dispatch) => dispatch(focus('pet-profile', 'petName')),
     enableReinitialize: true
-})(PetProfileForm);
+  })(PetProfileForm)
+
+
+  PetProfileForm = connect(
+    (state) => {
+        // const petId = props.match.params.petId;
+        // console.log(this.props.currentPet.)
+         return {
+            redirect: state.petprofile.redirect,
+            initialValues: getInitialValues(state.petprofile.currentPet),
+            loading: state.petprofile.loading,
+            error: state.petprofile.error,
+            currentPet: state.petprofile.currentPet
+        }
+    }
+)(PetProfileForm);
+       
+
+export default PetProfileForm
+   
 
 
 

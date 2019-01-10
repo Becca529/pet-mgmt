@@ -19,9 +19,10 @@ export class FoodForm extends React.Component {
     }
 
     render() {
+        const petId = this.props.match.params.petId;
         if (this.props.redirect) {
             return (
-                <Redirect to="/home"/>
+                <Redirect to={`/pet-profile/${petId}`}/>
             );
             
         }
@@ -71,7 +72,7 @@ export class FoodForm extends React.Component {
                     disabled={this.props.pristine || this.props.submitting}>
                     Submit
                 </button>
-                <button><Link to="/home">Cancel</Link></button>
+                <button><Link to={`/pet-profile/${petId}`}>Cancel</Link></button>
             </form>
         );
     }
