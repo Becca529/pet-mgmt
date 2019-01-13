@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from 'react-router-dom';
 import App from './components/App'
+
 //import routes from './routes.js';
 
 import './styles/styles.css';
@@ -14,7 +15,7 @@ ReactDOM.render(
     <Provider store={store}>
      <Router>
             <App />
-        </Router>
+     </Router>
     </Provider>,
     document.getElementById('root')
 );

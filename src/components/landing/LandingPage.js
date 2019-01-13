@@ -1,6 +1,7 @@
 import React from 'react';
 import './LandingPage.css';
 import LoginForm from '../login/LoginForm';
+import FeatureBox from './FeatureBox';
 
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -12,20 +13,18 @@ export function LandingPage(props) {
 }
   return (
     <div className="landing">
-      <div className="welcome-box">
+      <div className="welcome-container">
         <h1>[Pet Management Name]</h1>
         <h2>Manage everything pet in one place</h2>
         <LoginForm />
       </div>
-      <section className="feature-area">
-        <div className="feature-box">
-          <img className="feature-icon" alt="feature icon"/>
-          <div className="feature-body">
-            <h5 className="feature-title">Build Pet Profiles</h5>
-            <p className="feature-details">Build profiles for each one of your fur babies in your family</p>
-          </div>
-        </div>
-        <div className="feature-box">
+      <div className="feature-area">
+        <FeatureBox icon="far fa-user-circle fa-5x" title="Build Pet Profiles" description='Build profiles for each one of your fur babies in your family' />
+        <FeatureBox icon="fas fa-notes-medical fa-5x" title="Store and Track Pet Health Records" description="Never forget when your pet next round of vaccines are due." />
+        <FeatureBox icon="fas fa-suitcase-rolling fa-5x" title="House Pet Sitting Details" description="Tired of always writing out pet sitting instructions every time you go out of town? Keep your instructions in one spot online that can be easily shared with others." />
+        <FeatureBox icon="fas fa-user-friends fa-5x" title="Interact with your Local Pet Community" description="Looking to get involved with great local animal volunteer opportunities or attend upcoming pet events in your neighbor? We got your coverd plus much much more."/>
+   </div>
+        {/* <div className="feature-box">
           <img className="feature-icon" alt="feature icon"/>
           <div className="feature-body">
             <h5 className="feature-title">Store Key Vet Information</h5>
@@ -45,8 +44,7 @@ export function LandingPage(props) {
             <h5 className="feature-title">Interact with your Local Pet Community</h5>
             <p className="feature-details">Looking to get involved with great local animal volunteer opportunities or attend upcoming pet events in your neighbor? We got your coverd plus much much more.</p>
           </div>
-        </div>
-      </section>
+        </div> */}
     </div>
   )
 }

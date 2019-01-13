@@ -20,23 +20,21 @@ export class Header extends React.Component {
             <button onClick={() => this.logOut()}>Log out</button>
         );
         return (
-            <nav role="navigation" className="header-signed-in">
-                <img src={logo} className="logo" alt="logo"/>
-                {" | "}
-                <Link className="link-logo"to="/">Home</Link>
-                {" | "}
-                {logOutButton}
-            </nav>
+                 <ul className="topnav nav-signed-in" role="navigation">
+                     <li><i className="fas fa-paw"><Link className="link-logo"to="/">Home</Link></i></li>
+                     <li><Link className="link-logo"to="/">HOME</Link></li>
+                     <li><i className="fa fa-user-circle-o">MY ACCOUNT</i></li>
+                     <li>{logOutButton}</li>
+                 </ul>
         );
     }
     else {
         return (
-            <nav role="navigation" className="header-signed-out">
-                <img src={logo} className="logo" alt="logo"/>
-                <Link to="/register" activeclassname="active"className="link-btn">Sign Up</Link>
-                {" | "}
-                <Link to="/login" activelassname="active" className="link-btn" >Sign In</Link>
-            </nav>
+            <ul className="topnav nav-signed-in" role="navigation">
+                <li><Link className="home"to="/"><i className="fas fa-paw home"></i>Home</Link></li>
+                <li><button><Link to="/register" activeclassname="active"className="link-btn">SIGN UP</Link></button></li>
+                <li><button><Link to="/login" activelassname="active" className="link-btn" >SIGN IN</Link></button></li>
+            </ul>
         )}
   }
 }
@@ -48,21 +46,3 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps)(Header);
 
-
-// class TopNavbar extends Component {
-//   render() {
-//     return (
-//       <nav role="navigation">
-//       <div class="topnav">
-//       {/* <img class="logo" src="god" alt="home-logo"> */}
-//         <a class="active" href="#home">Home</a>
-//         <a href="#news">My Pet Community</a>
-//         <a href="#acount">My Account</a>
-//       <a href="#logout">Log Out</a>
-//     </div>
-//       </nav>
-//     );
-//   }
-// }
-
-// export default TopNavbar;
