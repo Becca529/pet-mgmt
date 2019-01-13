@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import './HomePage.css';
 import Spinner from 'react-spinkit';
 import requiresLogin from '../common/RequiresLogin';
-import {fetchPetProfiles, setCurrentPet} from '../../actions/fetchPetProfiles';
+import {fetchPetProfiles, setCurrentPet} from '../../actions/petProfiles';
 import {Link} from 'react-router-dom';
 import PetProfileCard from './PetProfileCard';
 
@@ -35,23 +35,13 @@ export class HomePage extends React.Component {
             return <strong>{this.props.error}</strong>;
         }
 
-        // if(selectedPet !== null){
-        //     console.log(selectedPet);
-        // //     return <div></div>
-        // }
-
         const petList = pets.map((pet) => (
             <li key={pet.id}>
                 <PetProfileCard onClick={this.onClick} pet={pet}></PetProfileCard>
             </li>
         ));
 
-        // const petList = ({pets, setPet}) =>
-        //     pets.map((pet, index) =>
-        //     <li key={pet.id}>
-        //         <PetProfileCard onClick={setPet(index +1)} pet={pet}></PetProfileCard>
-        //     </li>
-        //     )
+    
 
         return <ul className="pet-list">{petList}</ul>;
     }
@@ -90,7 +80,7 @@ const mapStateToProps = state => {
         pets: state.petprofile.petList,
         loading: state.petprofile.loading,
         error: state.petprofile.error,
-        selectedPet: state.petprofile.selectedPet
+        currentPet: state.petprofile.currentPet
     }
 }
     

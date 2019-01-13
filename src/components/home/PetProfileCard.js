@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import requiresLogin from '../common/RequiresLogin';
 import './PetProfileCard.css';
+import {deletePetProfile} from '../../actions/petProfiles';
+
 
 
 

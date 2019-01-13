@@ -2,25 +2,37 @@ import React from 'react';
 import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
-import {createPetProfile} from '../../actions/createPetProfile';
+import {createPetProfile, updatePetProfile, deletePetProfile} from '../../actions/petProfiles';
 import {Redirect, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-const editPetProfile = createPetProfile;
-// const {pet} = props.location.state
 
 export class PetProfileForm extends React.Component {
     onSubmit(values) {
         const {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight} = values;
         const pet = {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight};
-        console.log(pet);
+        console.log(pet);        // const petId = props.match.params.petId;
+        // let petId = this.props.match.params.petId;
+        console.log(this.props.currentPet.id);
         console.log("submit button pushed");
-        const dispatched = this.props.pet ? editPetProfile : createPetProfile
-        if (this.props.pet) {
-            pet.id = this.props.pet.id
-        }
-        return this.props
-            .dispatch(dispatched(pet))
+        // const dispatched = this.props.formStatusEditing ? updatePetProfile : createPetProfile;
+        // console.log(dispatched);
+        // if (this.props.pet) {
+        //     pet.id = this.props.pet.id
+        // }
+            this.props.dispatch(updatePetProfile(pet, this.props.currentPet.id));
+        // this.props.dispatch(dispatched(pet, this.props.currentPet.id));
+
+
     }
+
+    onClickDelete = () => {
+        let petId = this.props.currentPet.id
+        console.log(petId);
+        console.log("getting back to on clicked delete");
+        
+        //message asking if they are sure they want to delete?
+        this.props.dispatch(deletePetProfile(petId));
+        }
 
 
     render() {
@@ -40,6 +52,18 @@ export class PetProfileForm extends React.Component {
                 <div className="message message-error">{this.props.error}</div>
             );
         }   
+
+
+        let buttonType 
+        if (this.props.formStatusEditing) {
+            buttonType = (<div className="editForm">
+                <button type="submit" disabled={this.props.pristine || this.props.submitting}>Update</button>
+                <button className="btn" onClick={this.onClickDelete}>Delete</button>
+                </div>)
+        }
+        if (!this.props.formStatusEditing) {
+            buttonType = (<button type="submit"disabled={this.props.pristine || this.props.submitting}>Submit</button>)
+        }
 
 
         return (
@@ -116,9 +140,7 @@ export class PetProfileForm extends React.Component {
                 component={Input}
                 label="Weight"
             />
-            <button 
-                type="submit"
-                disabled={this.props.pristine || this.props.submitting}>Submit</button>
+            {buttonType}
             <button><Link to="/home">Cancel</Link></button>
             </fieldset>
             </form>        
@@ -132,7 +154,7 @@ const getInitialValues = (currentPet) => {
         const { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription  } = currentPet;
         return { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription };
     }
-    // return { petName: '', breed: '', type: '', sex: '', birthdate: '', personality: '', likes: '', dislikes: '', weight: '', physicalDescription: ''};
+    return { petName: '', breed: '', type: '', sex: '', birthdate: '', personality: '', likes: '', dislikes: '', weight: '', physicalDescription: ''};
 }
 
 
@@ -152,7 +174,8 @@ PetProfileForm = reduxForm({
             initialValues: getInitialValues(state.petprofile.currentPet),
             loading: state.petprofile.loading,
             error: state.petprofile.error,
-            currentPet: state.petprofile.currentPet
+            currentPet: state.petprofile.currentPet,
+            formStatusEditing: state.petprofile.formStatusEditing
         }
     }
 )(PetProfileForm);

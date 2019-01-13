@@ -11,7 +11,7 @@ import RegistrationPage from './register/RegistrationPage';
 
 import HomePage from './home/HomePage';
 import VetForm from './vet/ VetForm';
-import VaccineForm from './medical/VaccineForm';
+import VaccineForm from './vaccine/VaccineForm';
 import FoodForm from './pet-sitting/FoodForm';
 import PetProfilePage from './home/PetProfilePage';
 
@@ -62,9 +62,9 @@ export class App extends React.Component {
                 <Route exact path="/login" component={LoginForm} />
                 <Route exact path="/pet-profile" component={PetProfileForm} />
                 <Route path="/pet-profile/:petId" component={PetProfilePage} />
-                <Route path="/vet/" component={VetForm} />
-                <Route path="/medical/:petId" component={VaccineForm} />
-                <Route path="/pet-sitting/:petId" component={FoodForm} />
+                <Route path="/veterinarians/:petId" component={VetForm} />
+                <Route path="/vaccines/:petId" component={VaccineForm} />
+                <Route path="/sitters/:petId" component={FoodForm} />
                 </div>
               <Footer />
           </div>

@@ -3,33 +3,73 @@ import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
-import {addPetSubdocument} from '../../actions/createPetProfile';
+import {addVeterinarian, updateVeterinarian, deleteVeterinarian} from '../../actions/veterinarians';
+import {deletePetSubdocument, setCurrentPet} from '../../actions/petProfiles';
+
 import {connect} from 'react-redux';
 
 
 
 
 export class VetForm extends React.Component {
+    
     onSubmit(values) {
-        let type = "vet"
         const {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor} = values;
-        const vetInfo = {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor, type};
-        const petId = this.props.currentPet.id;
-        return this.props
-            .dispatch(addPetSubdocument(vetInfo, petId))
-    }
-
- 
-    render() 
-    {
+        const vet = {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor};
+        console.log("getting to onSubmit on form");
         const petId = this.props.match.params.petId;
+        const vetId = this.props.currentPetDetail._id;
+        
+        console.log(vetId);
+        console.log("submit button pushed");
+        // if (vetId){
+        //     this.props.dispatch(updateVeterinarian(vet, petId, vetId));
+        // }  
+        // else {
+            this.props.dispatch(addVeterinarian(vet, petId));
+
+        // }
+    }
+        
+
+
+    onClickDelete = () => {
+        // console.log(subDocID);
+        let petId = this.props.match.params.petId;
+        let subDocId =this.props.match.params.subDoctId;
+        console.log(subDocId);
+        console.log(petId);
+        let route = "veterinarian";
+
+        console.log("getting back to on clicked delete");
+        //message asking if they are sure they want to delete?
+        // this.props.dispatch(deletePetSubdocument( petId, subDocID, route));
+        }
+ 
+    render() {
+        let petId = this.props.match.params.petId;
+        let currentVet = this.props.currentVet;
+
         if (this.props.redirect) {
             return (
                 <Redirect to={`/pet-profile/${petId}`}/>
-            );
+            )
         }
 
-     
+
+
+
+        let buttonType 
+        if (this.props.formStatusEditing) {
+            buttonType = (<div className="editForm">
+                <button type="submit" disabled={this.props.pristine || this.props.submitting}>Update</button>
+                <button className="btn" onClick={this.onClickDelete}>Delete</button>
+                </div>)
+        }
+        if (!this.props.formStatusEditing) {
+            buttonType = (<button type="submit"disabled={this.props.pristine || this.props.submitting}>Submit</button>)
+        }
+ 
 
         let errorMessage;
         if (this.props.error) {
@@ -43,7 +83,9 @@ export class VetForm extends React.Component {
                 onSubmit={this.props.handleSubmit(values =>
                     this.onSubmit(values)
                 )}>
+                {/* <p>name- {this.props.currentPet.petName}</p> */}
                 {errorMessage}
+                <p>form status- {this.props.formStatusEditing}</p>
                  <fieldset>
                     <legend>Vet Information</legend>
                 <Field
@@ -97,40 +139,47 @@ export class VetForm extends React.Component {
                 /> 
                 <Field
                     name="emergencyAfterHours"
-                    type="boolean"
+                    type="text"
                     component={Input}
                     label="Emergency / After Hours Availability?"
-                />    
-                <button 
-                    type="submit"
-                    disabled={this.props.pristine || this.props.submitting}>
-                    Submit
-                </button>
+                /> 
+                {buttonType}
                 <button><Link to={`/pet-profile/${petId}`}>Cancel</Link></button>
                 </fieldset>
             </form>
         );
     }
 }
-const mapStateToProps = (state) => {
-    // const petId = props.match.params.petId;
-     return {
-        redirect: state.petprofile.redirect,
-        currentPet: state.petprofile.currentPet,
-        loading: state.petprofile.loading,
-        error: state.petprofile.error,
-    };
-};
 
-VetForm = connect(
-    mapStateToProps
+const getInitialValues = (currentPetDetail) => {
+    if (currentPetDetail) {
+        const { clinicName, emergencyAfterHours, email, addressLine1, addressLine2, city, zipcode, state, phoneNumber, faxNumber, doctor } = currentPetDetail;
+        return { clinicName, emergencyAfterHours, email, addressLine1, addressLine2, city, zipcode, state, phoneNumber, faxNumber, doctor };
+    }
+}
+
+VetForm = reduxForm({
+    form: 'vet-form', // a unique identifier for this form
+    onSubmitFail: (errors, dispatch) => dispatch(focus('vet-form', 'clinicName')),
+    // enableReinitialize: true
+  })(VetForm)
+
+  VetForm = connect(
+    (state) => {
+        // const petId = props.match.params.petId;
+        // console.log(this.props.currentPet.)
+        console.log(state);
+         return {
+            redirect: state.petprofile.redirect,
+            initialValues: getInitialValues(state.petprofile.currentPetDetail),
+            currentPet: state.petprofile.currentPet,
+            loading: state.petprofile.loading,
+            error: state.petprofile.error,
+            currentPetDetail: state.petprofile.currentPetDetail,
+            formStatusEditing: state.petprofile.formStatusEditing
+        }
+    }
 )(VetForm);
 
-export default reduxForm({
-    form: 'vet',
-    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('vet', Object.keys(errors)[0]))
-})(VetForm);
 
-// onSubmitSuccess : (result, dispatch) => 
-//         dispatch(this.context.history.push('/pet-profile/')),
+export default VetForm

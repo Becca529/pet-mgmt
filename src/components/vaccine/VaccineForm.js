@@ -3,7 +3,7 @@ import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
-import {addPetSubdocument} from '../../actions/createPetProfile';
+import {addVaccine, updateVaccine, deleteVaccine} from '../../actions/vaccines';
 import {connect} from 'react-redux';
 
 
@@ -16,7 +16,7 @@ export class VaccineForm extends React.Component {
         const vaccine = {vaccineName, dateAdministered, nextDueDate, notes , type};
         const petid = this.props.match.params.petId;
         return this.props
-            .dispatch(addPetSubdocument(vaccine, petid))
+            .dispatch(addVaccine(vaccine, petid))
     }
 
     render() {

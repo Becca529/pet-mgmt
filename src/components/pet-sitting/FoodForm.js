@@ -2,7 +2,8 @@ import React from 'react';
 import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {Redirect, Link} from 'react-router-dom';
-import {addPetSubdocument} from '../../actions/createPetProfile';
+import {addSitterFood, updateSitterFood, deleteSitterFood} from '../../actions/sitters';
+
 import {connect} from 'react-redux';
 
 
@@ -15,7 +16,7 @@ export class FoodForm extends React.Component {
         const foodInfo = {foodType, foodQuantity, foodFrequency, notes, type};
         const petid = this.props.match.params.petId;
         return this.props
-            .dispatch(addPetSubdocument(foodInfo, petid))
+            .dispatch(addSitterFood(foodInfo, petid))
     }
 
     render() {
