@@ -26,7 +26,9 @@ export class VetForm extends React.Component {
         //     this.props.dispatch(updateVeterinarian(vet, petId, vetId));
         // }  
         // else {
-            this.props.dispatch(addVeterinarian(vet, petId));
+            // this.props.dispatch(addVeterinarian(vet, petId));
+            this.props.dispatch(updateVeterinarian(vet, petId, vetId ));
+
 
         // }
     }

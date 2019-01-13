@@ -19,11 +19,16 @@ export class PetProfileForm extends React.Component {
         // if (this.props.pet) {
         //     pet.id = this.props.pet.id
         // }
+        if (this.props.formStatusEditing) {
             this.props.dispatch(updatePetProfile(pet, this.props.currentPet.id));
+        }
+        if (!this.props.formStatusEditing)
+            this.props.dispatch(createPetProfile(pet));
+        }
         // this.props.dispatch(dispatched(pet, this.props.currentPet.id));
 
 
-    }
+    
 
     onClickDelete = () => {
         let petId = this.props.currentPet.id
