@@ -4,9 +4,11 @@ import {registerUser} from '../../actions/users';
 import {login} from '../../actions/auth';
 import Input from '../common/Input';
 import {Link} from 'react-router-dom';
+import './RegistrationPage.css';
 import {required, nonEmpty, matches, length, isTrimmed} from '../../validators';
 const passwordLength = length({min: 6, max: 72});
 const matchesPassword = matches('password');
+
 
 
 
@@ -61,8 +63,9 @@ export class RegistrationForm extends React.Component {
                     disabled={this.props.pristine || this.props.submitting}>
                     Register & Sign In
                 </button>
-                <button><Link to="/">Cancel</Link></button>
+                <button><Link className="link-btn" to="/">Cancel</Link></button>
                 </fieldset>
+                <Link to="/login">Already signed up? Log In</Link>
             </form>
         );
     }

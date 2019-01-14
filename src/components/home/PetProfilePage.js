@@ -4,6 +4,8 @@ import React from 'react';
 import List from './List';
 import Spinner from 'react-spinkit';
 import PetProfileForm from './PetProfileForm';
+import './PetProfilePage.css';
+
 
 import {deletePetSubdocument, setCurrentPetDetail, clearPetDetail} from '../../actions/petProfiles';
 
@@ -57,11 +59,11 @@ export class PetProfilePage extends React.Component {
                 }
                 const petId = this.props.match.params.petId;
                 const vetList = currentPet.vetData.map((vet) => (
-                    <li key={currentPet.vetData.id}>
+                    <li className="vet-record" key={currentPet.vetData.id}>
                         <List title={vet.clinicName} vet={vet} petId={petId} onClickView={this.onClickView} onClickDelete={this.onClickDelete} subtitle={vet.phoneNumber} id={vet._id} route='veterinarians'></List>
                     </li>
                 ));
-                return <ul className="pet-list">{vetList}</ul>;
+                return <ul className="vet-list">{vetList}</ul>;
             }
 
 
@@ -77,26 +79,24 @@ export class PetProfilePage extends React.Component {
         }
 
         return (
-            <div className="pet-profile-detailed">
+            <div className="pet-profile-detailed-container">
                 <div className="form-display"></div>
                     <PetProfileForm/>
                 <div className="list-display">
 
                         <div className="detail-box">
-                        <h4>Vet Info</h4> 
-                            <button><Link className="btn-link" to={`/veterinarians/${petId}`}>Add New</Link></button> 
-                        {/* loop through and display each vet subdocument here */}
-                            {/* <List title={this.props.pet.vetData.clinicName} subtitle={this.props.vetData.phoneNumber} route='vet'>Vet Information</List> */}
+                        <h2>Vet Info</h2>
+                            <button><Link className="link-btn add-new" to={`/veterinarians/${petId}`}>Add New</Link></button> 
                             {this.renderVetList()}
                         </div>
                         <div className="detail-box">
                         <h4>Vaccines</h4> 
-                            <button><li><Link className="btn-link" to={`/vaccines/${petId}`}>Add New</Link></li></button> 
+                            <button><Link className="link-btn" to={`/vaccines/${petId}`}>Add New</Link></button> 
                             {/* <List title={this.props.pet.vaccineData.vaccineName} subtitle={this.props.vaccineData.directions} route='medical' >Vaccines</List> */}
                         </div>
                         <div className="detail-box">
                         <h4>Pet-Sitting Information</h4>
-                            <button><li><Link className="btn-link" to={`/sitters/${petId}`}>Add New</Link></li></button> 
+                            <button><Link className="link-btn" to={`/sitters/${petId}`}>Add New</Link></button> 
 
                             {/* <button><li><Link className="btn-link" onClick={this.props.addNew.bind(this, this.props.pet)} to={`/pet-sitting/${this.props.pet.id}`}>Add New</Link></li></button>
                             <List title={this.props.pet.petSittingData.foodType} subtitle={this.props.petSittingData.quantity} route='pet-sitting'>Pet-Sitting</List>                 */}

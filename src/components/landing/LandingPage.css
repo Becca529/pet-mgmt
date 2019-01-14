@@ -5,30 +5,36 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  /* margin: auto 0px; */
-
-
+  margin-bottom: 50px;
 }
 
 .welcome-container {
-padding: 2px 16px;
+height: 300px;
+margin: auto;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
 }
 
+h1 {
+  font-size: 50px;
+}
+
+.welcome-text{
+  padding-bottom: 20px;
+}
 .feature-section {
   display: flex;
   justify-content: center;
-
-
-
-
-
+  margin: 15px;
 }
 
 
-.landing-btn{
-  border: 5px, solid, white;
-  color: white;
+.fas {
+  color: rgb(122, 72, 72);
 }
 
-
-
+a:hover {
+  color: rgb(46, 4, 59);
+}

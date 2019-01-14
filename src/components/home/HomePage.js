@@ -51,11 +51,12 @@ export class HomePage extends React.Component {
     render() {
 
         return (
-            <div className="home-page">
-                <div className="divider">divider image</div>
+            <div className="home-page-container">
+                <div className="divider">
+                </div>
                 <div className="dashboard">
-                    <h1 className="page-title">My Pet Profiles - {this.props.username}</h1>
-                    <Link className="add-new-profile btn-link" to="/pet-profile">Add New Pet Profile</Link>
+                    <p className="dashboard-title">My Pet Profiles - {this.props.username}</p>
+                    <button><Link className="add-new-profile-btn" to="/pet-profile">Add New Pet Profile</Link></button>
                     <div className="pet-profile-list">
                         {this.renderPetList()}
                     </div>

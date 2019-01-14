@@ -17,13 +17,12 @@ export class Header extends React.Component {
   render() {
     if (this.props.loggedIn){
         let logOutButton = (
-            <button onClick={() => this.logOut()}>Log out</button>
+            <button className="link-btn" onClick={() => this.logOut()}>Log out</button>
         );
         return (
                  <ul className="topnav nav-signed-in" role="navigation">
-                     <li><i className="fas fa-paw"><Link className="link-logo"to="/">Home</Link></i></li>
-                     <li><Link className="link-logo"to="/">HOME</Link></li>
-                     <li><i className="fa fa-user-circle-o">MY ACCOUNT</i></li>
+                    <li className="home"><Link to="/home"><i className="fas fa-paw fa-lg"></i></Link></li>
+                     <li><i className="fas fa-user-circle fa-lg"></i>MY ACCOUNT</li>
                      <li>{logOutButton}</li>
                  </ul>
         );
@@ -31,9 +30,9 @@ export class Header extends React.Component {
     else {
         return (
             <ul className="topnav nav-signed-in" role="navigation">
-                <li><Link className="home"to="/"><i className="fas fa-paw home"></i>Home</Link></li>
-                <li><button><Link to="/register" activeclassname="active"className="link-btn">SIGN UP</Link></button></li>
-                <li><button><Link to="/login" activelassname="active" className="link-btn" >SIGN IN</Link></button></li>
+                <li className="home"><Link to="/"><i className="fas fa-paw fa-lg"></i></Link></li>
+                <li><button><Link to="/register" className="link-btn right-nav">SIGN UP</Link></button></li>
+                <li><button><Link to="/login" className="link-btn right-nav" >SIGN IN</Link></button></li>
             </ul>
         )}
   }

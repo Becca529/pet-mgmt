@@ -3,7 +3,8 @@ import {Field, reduxForm, focus} from 'redux-form';
 import Input from '../common/Input';
 import {login} from '../../actions/auth';
 import {required, nonEmpty} from '../../validators';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import './LoginForm.css';
 
 
@@ -21,12 +22,14 @@ export class LoginForm extends React.Component {
                 </div>
             );
         }
-        // if (this.props.loggedIn) {
-        //     return <Redirect to="/home" />;
-        // }
+
+        if (this.props.loggedIn) {
+            return <Redirect to="/home" />;
+        }
 
          
         return (
+            <div className="login-container"> 
             <form
                 className="login-form"
                 onSubmit={this.props.handleSubmit(values =>
@@ -55,14 +58,25 @@ export class LoginForm extends React.Component {
                     disabled={this.props.pristine || this.props.submitting}>
                     Log in
                 </button>
-                <button><Link to="/">Cancel</Link></button>
+                <button><Link className="link-btn" to="/">Cancel</Link></button>
                 </fieldset>
                 <Link to="/register">New User? Sign up here</Link>
             </form>
+        </div>
         );
     }
 }
-    
+
+
+const mapStateToProps = (state) => {
+     return {
+        loggedIn: state.auth.currentUser
+    };
+};
+
+LoginForm = connect(
+    mapStateToProps
+)(LoginForm);
 
 
 export default reduxForm({
