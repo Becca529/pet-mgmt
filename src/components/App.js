@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
 
-import Footer from './common/Footer';
 import Header from './common/Header';
 import LandingPage from './landing/LandingPage';
 import RegistrationPage from './register/RegistrationPage';
@@ -66,7 +65,6 @@ export class App extends React.Component {
                 <Route path="/vaccines/:petId" component={VaccineForm} />
                 <Route path="/sitters/:petId" component={FoodForm} />
                 </div>
-              <Footer />
           </div>
       );
   }

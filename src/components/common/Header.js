@@ -23,7 +23,7 @@ export class Header extends React.Component {
                  <ul className="topnav nav-signed-in" role="navigation">
                     <li className="home"><Link to="/home"><i className="fas fa-paw fa-lg"></i></Link></li>
                      <li><i className="fas fa-user-circle fa-lg"></i>MY ACCOUNT</li>
-                     <li>{logOutButton}</li>
+                     <li>{logOutButton}</li> 
                  </ul>
         );
     }

@@ -13,13 +13,14 @@ const {pet} = props
 
         return (
             <div className="pet-profile w3-card">
-            <i class="fas fa-paw fa-3x"></i>
-            {/* <img className="pet-profile-img" src="img_avatar.png" alt="pet"/> */}
+            <div className="pet-delete-btn">
+            <i onClick={props.onClickDelete.bind(this, pet.id)} className="far fa-times-circle pet-delete-btn"></i>
+            </div>
+            <i className="fas fa-dog fa-3x pet-img-temp"></i>
             <div className="container">
                 <p className="card-title">{pet.petName} </p> 
                 <ul className="pet-profile-nav">
                 <li><Link className="btn-link" onClick={props.onClick.bind(this, pet)} to={`/pet-profile/${pet.id}`}>View Pet Profile</Link></li>
-                    {/* <li><Link className="btn-link" to={`/pet-profile/${pet.id}`}>Pet Profile</Link></li> */}
                 </ul>
             </div>
         </div>

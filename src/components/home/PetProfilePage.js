@@ -1,20 +1,24 @@
 import {connect} from 'react-redux';
 import {Redirect, Link} from 'react-router-dom';
 import React from 'react';
-import List from './List';
+import Table from './Table';
 import Spinner from 'react-spinkit';
 import PetProfileForm from './PetProfileForm';
 import './PetProfilePage.css';
 
 
-import {deletePetSubdocument, setCurrentPetDetail, clearPetDetail} from '../../actions/petProfiles';
+import {deletePetSubdocument, setCurrentPetDetail, fetchPetProfile, clearPetDetail} from '../../actions/petProfiles';
 
 
 export class PetProfilePage extends React.Component {
 
-    // componentWillUnmount() {
-    //     this.props.dispatch(clearPetDetail());
-    //   }
+     componentWillMount() {
+         this.props.dispatch(clearPetDetail());
+    }
+// //         const petId = this.props.currentPet ? this.props.currentPet.id : null;
+// // console.log("petId-", petId);
+        //  this.props.dispatch(fetchPetProfile(petId));
+//     }
 
     onClickView = (selectedDetail, form ) => {
         console.log(selectedDetail);
@@ -28,14 +32,18 @@ export class PetProfilePage extends React.Component {
         // this.props.dispatch(displayPetDetailEditForm(subDocID));
         
     
-    onClickDelete = (subDocID, route) => {
-        console.log(subDocID);
+    onClickDelete = (subDocId, route) => {
+        console.log(subDocId);
         const petId = this.props.match.params.petId;
         console.log(route);
+        console.log(petId);
+        let indexToDelete = this.props.currentPet.vetData.findIndex(x => x._id === subDocId)
+        console.log(indexToDelete);
+
 
         console.log("getting back to on clicked delete");
         //message asking if they are sure they want to delete?
-        this.props.dispatch(deletePetSubdocument( petId, subDocID, route));
+        this.props.dispatch(deletePetSubdocument( petId, subDocId, route, indexToDelete));
         }
 
 
@@ -57,24 +65,39 @@ export class PetProfilePage extends React.Component {
                 if (error) {
                     return <strong>{this.props.error}</strong>;
                 }
-                const petId = this.props.match.params.petId;
-                const vetList = currentPet.vetData.map((vet) => (
-                    <li className="vet-record" key={currentPet.vetData.id}>
-                        <List title={vet.clinicName} vet={vet} petId={petId} onClickView={this.onClickView} onClickDelete={this.onClickDelete} subtitle={vet.phoneNumber} id={vet._id} route='veterinarians'></List>
-                    </li>
-                ));
-                return <ul className="vet-list">{vetList}</ul>;
-            }
-
+                 const petId = this.props.match.params.petId;
+                 console.log(this.props.state);
+                 const vetList = currentPet.vetData.map((vet) => (
+                     <tr className="vet-record" key={currentPet.vetData.id}>
+                         <Table title={vet.clinicName} vet={vet} petId={petId} onClickView={this.onClickView} onClickDelete={this.onClickDelete} subtitle={vet.phoneNumber} id={vet._id} route='veterinarians'></Table>
+                     </tr>
+                 ));
+                   
+                
+                 return <table id="vets" className="vet-list">
+                 <tr>
+                    <th>Clinic</th>
+                    <th>Phone Number</th>
+                    <th></th>
+                </tr>
+                {vetList}
+                 </table>
+    }
 
 
     render() {
-        const petId = this.props.match.params.petId;
+        const petId2 = this.props.match.params.petId;
         let form = this.props.form;
+        const petId = this.props.currentPet ? this.props.currentPet.id : null;
+        console.log(petId);
+        console.log(this.props.form);
+        console.log(this.props.formStatusEditing);
+
 
         if (this.props.form && this.props.formStatusEditing) {
             return(
-                <Redirect to={`/${form}/${petId}`}/>
+                
+                 <Redirect to={`/${form}/${petId}`}/>
                 )
         }
 
@@ -85,8 +108,7 @@ export class PetProfilePage extends React.Component {
                 <div className="list-display">
 
                         <div className="detail-box">
-                        <h2>Vet Info</h2>
-                            <button><Link className="link-btn add-new" to={`/veterinarians/${petId}`}>Add New</Link></button> 
+                        <h2>Vet Info</h2><button><Link className="link-btn add-new" to={`/veterinarians/${petId}`}>Add New</Link></button> 
                             {this.renderVetList()}
                         </div>
                         <div className="detail-box">

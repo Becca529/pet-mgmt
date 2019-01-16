@@ -4,7 +4,7 @@ import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
 import {Redirect, Link} from 'react-router-dom';
 import {addVeterinarian, updateVeterinarian, deleteVeterinarian} from '../../actions/veterinarians';
-import {deletePetSubdocument, setCurrentPet} from '../../actions/petProfiles';
+import {deletePetSubdocument, setCurrentPet, clearPetDetail} from '../../actions/petProfiles';
 
 import {connect} from 'react-redux';
 
@@ -18,21 +18,29 @@ export class VetForm extends React.Component {
         const vet = {clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor};
         console.log("getting to onSubmit on form");
         const petId = this.props.match.params.petId;
-        const vetId = this.props.currentPetDetail._id;
+        const vetId = this.props.currentPetDetail ? this.props.currentPetDetail._id : null;
         
-        console.log(vetId);
+        console.log("vet-", vetId);
         console.log("submit button pushed");
-        // if (vetId){
-        //     this.props.dispatch(updateVeterinarian(vet, petId, vetId));
-        // }  
-        // else {
-            // this.props.dispatch(addVeterinarian(vet, petId));
-            this.props.dispatch(updateVeterinarian(vet, petId, vetId ));
+        console.log("petid"- petId);
+        console.log(this.props.formStatusEditing);
+        if (vetId){
+            this.props.dispatch(updateVeterinarian(vet, petId, vetId));
+        }  
+        else {
+            this.props.dispatch(addVeterinarian(vet, petId));
 
 
-        // }
+        }
     }
-        
+    onClickCancel = () => {
+        const petId = this.props.match.params.petId;
+        this.props.dispatch(clearPetDetail());
+
+        return (
+
+<Redirect to={`/pet-profile/${petId}`}/>        )
+    }
 
 
     onClickDelete = () => {
@@ -43,14 +51,17 @@ export class VetForm extends React.Component {
         console.log(petId);
         let route = "veterinarian";
 
+
         console.log("getting back to on clicked delete");
         //message asking if they are sure they want to delete?
-        // this.props.dispatch(deletePetSubdocument( petId, subDocID, route));
+         this.props.dispatch(deletePetSubdocument( petId, subDocId, route));
         }
  
     render() {
-        let petId = this.props.match.params.petId;
-        let currentVet = this.props.currentVet;
+        // let petId = this.props.match.params.petId;
+        const petId = this.props.currentPet ? this.props.currentPet.id : null;
+        console.log(petId)
+
 
         if (this.props.redirect) {
             return (
@@ -62,13 +73,13 @@ export class VetForm extends React.Component {
 
 
         let buttonType 
-        if (this.props.formStatusEditing) {
+        if (this.props.currentPetDetail) {
             buttonType = (<div className="editForm">
                 <button type="submit" disabled={this.props.pristine || this.props.submitting}>Update</button>
                 <button className="btn" onClick={this.onClickDelete}>Delete</button>
                 </div>)
         }
-        if (!this.props.formStatusEditing) {
+        if (!this.props.currentPetDetail) {
             buttonType = (<button type="submit"disabled={this.props.pristine || this.props.submitting}>Submit</button>)
         }
  
@@ -81,13 +92,12 @@ export class VetForm extends React.Component {
         }
 
         return (
+            <div className="vet-container">
             <form
                 onSubmit={this.props.handleSubmit(values =>
                     this.onSubmit(values)
                 )}>
-                {/* <p>name- {this.props.currentPet.petName}</p> */}
                 {errorMessage}
-                <p>form status- {this.props.formStatusEditing}</p>
                  <fieldset>
                     <legend>Vet Information</legend>
                 <Field
@@ -146,9 +156,10 @@ export class VetForm extends React.Component {
                     label="Emergency / After Hours Availability?"
                 /> 
                 {buttonType}
-                <button><Link className="link-btn" to={`/pet-profile/${petId}`}>Cancel</Link></button>
+                <button onClick={this.onClickCancel}><Link className="link-btn" to={`/pet-profile/${petId}`}>Cancel</Link></button>
                 </fieldset>
             </form>
+            </div>
         );
     }
 }

@@ -1,24 +1,48 @@
 .pet-profile {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    height: 150px;
+    width: 185px;
+    height: 225px;
     text-align: center;
     padding: 10px;
     margin: 5px;
     background-color: white;
+    border-radius: 10px;
     
   }
+
+
 
 .container {
     padding: 2px 16px;
   }
 
-  .pet-profile-nav {
-    list-style: none;
-    text-align: center;
-    }
+.pet-profile-nav {
+  list-style: none;
+  text-align: center;
+  }
 
 .card-title {
-  font-size: 30px;
+  font-size: 26px;
   margin: 5px;
+  overflow: hidden;
+}
+
+.pet-delete-btn {
+  align-content: right;
+  text-align: right;
+  padding-bottom: 5px;
+}
+
+
+.pet-delete-btn {
+  cursor: pointer;
+}
+
+
+.pet-img-temp {
+  /* background-color: ; */
+  padding: 8px;
+  border-radius: 100px;
+  border: grey solid 4px;
 }

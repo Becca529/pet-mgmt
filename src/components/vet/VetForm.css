@@ -1,0 +1,8 @@
+.vet-container {
+    display: flex;
+    height: 200px;
+    justify-content: center;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+  }

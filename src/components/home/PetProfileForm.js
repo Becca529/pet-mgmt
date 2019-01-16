@@ -5,6 +5,8 @@ import {required, nonEmpty } from '../../validators';
 import {createPetProfile, updatePetProfile, deletePetProfile} from '../../actions/petProfiles';
 import {Redirect, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import './PetProfilePage.css';
+
 
 export class PetProfileForm extends React.Component {
     onSubmit(values) {
@@ -12,20 +14,20 @@ export class PetProfileForm extends React.Component {
         const pet = {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight};
         console.log(pet);        // const petId = props.match.params.petId;
         // let petId = this.props.match.params.petId;
-        console.log(this.props.currentPet.id);
+        // console.log(this.props.currentPet.id);
         console.log("submit button pushed");
         // const dispatched = this.props.formStatusEditing ? updatePetProfile : createPetProfile;
         // console.log(dispatched);
         // if (this.props.pet) {
         //     pet.id = this.props.pet.id
         // }
-        if (this.props.formStatusEditing) {
+        if (this.props.currentPet) {
             this.props.dispatch(updatePetProfile(pet, this.props.currentPet.id));
         }
-        if (!this.props.formStatusEditing)
+
+        if (!this.props.currentPet)
             this.props.dispatch(createPetProfile(pet));
         }
-        // this.props.dispatch(dispatched(pet, this.props.currentPet.id));
 
 
     
@@ -60,19 +62,21 @@ export class PetProfileForm extends React.Component {
 
 
         let buttonType 
-        if (this.props.formStatusEditing) {
+        if (this.props.currentPet) {
             buttonType = (<div className="editForm">
                 <button type="submit" disabled={this.props.pristine || this.props.submitting}>Update</button>
                 <button className="btn" onClick={this.onClickDelete}>Delete</button>
                 </div>)
         }
-        if (!this.props.formStatusEditing) {
+        if (!this.props.currentPet) {
             buttonType = (<button type="submit"disabled={this.props.pristine || this.props.submitting}>Submit</button>)
         }
 
 
         return (
-            <form
+            <div className="pet-profile-container"> 
+
+            <form className="pet-profile-form"
             onSubmit={this.props.handleSubmit(values =>
                 this.onSubmit(values)
             )}
@@ -80,21 +84,24 @@ export class PetProfileForm extends React.Component {
             {errorMessage}
              <fieldset>
                 <legend>Pet Information</legend>
+            
             <Field
                 name="petName"
                 type="text"
                 component={Input}
                 label="Pet Name"
-                validate={[required, nonEmpty]}
-                
-
+                validate={[required, nonEmpty]} 
             />
+           
+
+          
             <Field
                 name="type"
                 type="text"
                 component={Input}
                 label="Type"
             />
+      
               <Field
                 name="breed"
                 type="text"
@@ -148,7 +155,8 @@ export class PetProfileForm extends React.Component {
             {buttonType}
             <button><Link to="/home">Cancel</Link></button>
             </fieldset>
-            </form>        
+            </form>    
+            </div>    
             );
     }
 }
@@ -180,7 +188,7 @@ PetProfileForm = reduxForm({
             loading: state.petprofile.loading,
             error: state.petprofile.error,
             currentPet: state.petprofile.currentPet,
-            formStatusEditing: state.petprofile.formStatusEditing
+            formStatusEditing: state.petprofile.formStatusEditing,
         }
     }
 )(PetProfileForm);

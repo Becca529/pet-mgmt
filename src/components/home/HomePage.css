@@ -6,12 +6,14 @@
 }
 
 .divider {
-  /* background-image: url(); */
-  height: 120px;
-  background-color:lightgray;
-
+  background-image: url(../../imgs/divider-img.jpeg);
+  height: 130px;
+  margin-top: 45px;
   background-size: cover;
   margin-bottom: 20px;
+  border-top: black 1px solid;
+  border-bottom: black 1px solid;
+ 
 }
 
 
@@ -28,7 +30,7 @@
 
 .dashboard-title {
   font-size: 30px;
-  color: rgb(95, 95, 95);
+  color: rgb(22, 21, 21);
   padding: 5px;
   text-align: center;
 
@@ -42,23 +44,16 @@
 
 
 }
-/* section {
-  min-height: 200px;
-  padding: 30px 15px;
-  background-color: #bbb;
-} */
-
-/* section:nth-child(even) {
-  background-color: #ddd;
-} */
-
 
 .pet-profile-list {
+  background-color: rgb(1, 37, 10);
   background-color: lightgray;
   min-height: 800px;
   max-width: 800px;
-  padding: 20px;
+  padding: 10px;
   margin: auto;
+  border-top:  rgb(122, 72, 72) solid 15px;
+
 
 }
 

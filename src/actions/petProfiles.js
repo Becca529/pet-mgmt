@@ -42,6 +42,41 @@ export const fetchPetProfiles = () => (dispatch, getState) => {
 }
 
 
+export const FETCH_PET_BEGIN = 'FETCH_PET_BEGIN';
+export const fetchPetBegin = () => ({
+    type: FETCH_PET_BEGIN
+});
+
+export const FETCH_PET_SUCCESS = 'FETCH_PET_SUCCESS';
+export const fetchPetSuccess = pets => ({
+    type: FETCH_PET_SUCCESS,
+    pets
+});
+
+export const FETCH_PET_ERROR = 'FETCH_PET_ERROR';
+export const fetchPetError = error => ({
+    type: FETCH_PET_ERROR,
+    error
+});
+export const fetchPetProfile = (petId) => (dispatch, getState) => {
+    const authToken = getState().auth.authToken;
+    console.log("getting to fetch profile");
+    console.log(petId);
+    dispatch(fetchPetBegin());
+    return fetch(`${API_BASE_URL}/pets/{petId}`, {
+        method: 'GET',
+        headers: {
+            // Provide our auth token as credentials
+            Authorization: `Bearer ${authToken}`,
+        }
+    })
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then((pet) => dispatch(fetchPetSuccess(pet)))
+        .catch(error => {
+            dispatch(fetchPetError(error));
+        });
+}
 // -----------------------------------------------------------------------------
 //                                    POST
 // -----------------------------------------------------------------------------
@@ -122,8 +157,9 @@ export const updatePetProfile = (updatedPet, petId) => (dispatch, getState) => {
 // -----------------------------------------------------------------------------
 
 export const DELETE_PET_PROFILE_SUCCESS = 'DELETE_PET_PROFILE_SUCCESS';
-export const deletePetProfileSucess =  () => ({
-    type: DELETE_PET_PROFILE_SUCCESS
+export const deletePetProfileSucess =  (petId) => ({
+    type: DELETE_PET_PROFILE_SUCCESS,
+    petId
 });
 
 export const DELETE_PET_PROFILE_ERROR = 'DELETE_PET_PROFILE_ERROR';
@@ -133,8 +169,9 @@ export const deletePetProfileError = error => ({
 });
 
 export const DELETE_PET_SUBDOCUMENT_SUCCESS = 'DELETE_PET_SUBDOCUMENT_SUCCESS';
-export const deletePetSubdocumentSuccess =  () => ({
-    type: DELETE_PET_SUBDOCUMENT_SUCCESS
+export const deletePetSubdocumentSuccess =  (indexToDelete) => ({
+    type: DELETE_PET_SUBDOCUMENT_SUCCESS,
+    indexToDelete
 });
 
 export const DELETE_PET_SUBDOCUMENT_ERROR = 'DELETE_PET_SUBDOCUMENT_ERROR';
@@ -144,23 +181,25 @@ export const deletePetSubdocumentError = error => ({
 });
 
 
-export const deletePetProfile = (petid) => (dispatch, getState) => {
+export const deletePetProfile = (petId) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/pets/${petid}`, {
+
+    return fetch(`${API_BASE_URL}/pets/${petId}`, {
         method: 'DELETE',
-        body: JSON.stringify(petid),
         headers: {
             // Provide our auth token as credentials
             Authorization: `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+
         }
     })
-        .then(() => dispatch(deletePetProfileSucess()))
+        .then(() => dispatch(deletePetProfileSucess(petId)))
         .catch(err => {
             dispatch(deletePetProfileError(err));
         });
 };
 
-export const deletePetSubdocument = (petId, subDocId, route) => (dispatch, getState) => {
+export const deletePetSubdocument = (petId, subDocId, route, indexToDelete) => (dispatch, getState) => {
     const authToken = getState().auth.authToken;
     return fetch(`${API_BASE_URL}/${route}/${petId}/${subDocId}`, {
         method: 'DELETE',
@@ -170,7 +209,7 @@ export const deletePetSubdocument = (petId, subDocId, route) => (dispatch, getSt
             'Content-Type': 'application/json'
         }
     })
-        .then(() => dispatch(deletePetSubdocumentSuccess()))
+        .then(() => dispatch(deletePetSubdocumentSuccess(indexToDelete)))
         .catch(err => {
             dispatch(deletePetSubdocumentError(err));
         });
@@ -183,7 +222,7 @@ export const SET_CURRENT_PET= 'SET_CURRENT_PET';
 export function setCurrentPet (pet) {
     return {
       type: SET_CURRENT_PET,
-      pet,
+      pet
     };
   }
 

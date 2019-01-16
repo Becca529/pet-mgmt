@@ -31,13 +31,17 @@ export class LoginForm extends React.Component {
         return (
             <div className="login-container"> 
             <form
-                className="login-form"
+                className="login-form flex"
                 onSubmit={this.props.handleSubmit(values =>
                     this.onSubmit(values)
                 )}>                
                 {error}
                 <fieldset>
+                <div class="row">
+               <div class="col-4">
                 <label htmlFor="username">Username</label>
+                </div>
+                <div class="col-6">
                 <Field
                     component={Input}
                     type="text"
@@ -45,7 +49,13 @@ export class LoginForm extends React.Component {
                     id="username"
                     validate={[required, nonEmpty]}
                 />
+                   </div>
+           </div>
+           <div class="row">
+               <div class="col-4">
                 <label htmlFor="password">Password</label>
+                </div>
+               <div class="col-6">
                 <Field
                     component={Input}
                     type="password"
@@ -53,12 +63,16 @@ export class LoginForm extends React.Component {
                     id="password"
                     validate={[required, nonEmpty]}
                 />
+                  </div>
+           </div>
+           <div class="row">
                 <button 
                     type="submit"
                     disabled={this.props.pristine || this.props.submitting}>
                     Log in
                 </button>
                 <button><Link className="link-btn" to="/">Cancel</Link></button>
+                </div>
                 </fieldset>
                 <Link to="/register">New User? Sign up here</Link>
             </form>

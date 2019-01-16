@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import './HomePage.css';
 import Spinner from 'react-spinkit';
 import requiresLogin from '../common/RequiresLogin';
-import {fetchPetProfiles, setCurrentPet} from '../../actions/petProfiles';
-import {Link} from 'react-router-dom';
+import {fetchPetProfiles, setCurrentPet, deletePetProfile} from '../../actions/petProfiles';
+import {Link } from 'react-router-dom';
 import PetProfileCard from './PetProfileCard';
 
 
@@ -13,9 +13,20 @@ export class HomePage extends React.Component {
         this.props.dispatch(fetchPetProfiles());
     }
 
+
+    onClickDelete = (petId) => {
+        console.log(petId);
+
+        console.log("getting back to on clicked delete");
+        //message asking if they are sure they want to delete?
+        this.props.dispatch(deletePetProfile(petId));
+        }
+
+
+
     onClick = (selectedPet) => {
         console.log(selectedPet);
-        console.log("getting back to onclick");
+        console.log("getting back to onclick view");
         this.props.dispatch(setCurrentPet(selectedPet));
 
     //    setCurrentPet(selectedPet);
@@ -37,7 +48,7 @@ export class HomePage extends React.Component {
 
         const petList = pets.map((pet) => (
             <li key={pet.id}>
-                <PetProfileCard onClick={this.onClick} pet={pet}></PetProfileCard>
+                <PetProfileCard onClick={this.onClick} onClickDelete={this.onClickDelete} pet={pet}></PetProfileCard>
             </li>
         ));
 
@@ -81,7 +92,8 @@ const mapStateToProps = state => {
         pets: state.petprofile.petList,
         loading: state.petprofile.loading,
         error: state.petprofile.error,
-        currentPet: state.petprofile.currentPet
+        currentPet: state.petprofile.currentPet,
+        
     }
 }
     

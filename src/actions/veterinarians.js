@@ -38,8 +38,8 @@ export const addVeterinarian = (data, petId) => (dispatch, getState) => {
             'Content-Type': 'application/json'
         }
     })
-         .then(res => normalizeResponseErrors(res))
-         .then(res => res.json())
+        //  .then(res => normalizeResponseErrors(res))
+        //  .then(res => res.json())
         .then(() => dispatch(createVeterinarianSuccess()))
         .catch(err => {
             dispatch(createVeterinarianError(err));
@@ -72,7 +72,7 @@ export const updateVeterinarian = (updatedPetDetails, petId, subDocId) => (dispa
             'Content-Type': 'application/json'
         }
     })
-        .then(({vet}) => dispatch(updateVeterinarianSuccess(vet)))
+        .then(() => dispatch(updateVeterinarianSuccess()))
         .catch(err => {
             dispatch(updateVeterinarianError(err));
         });
