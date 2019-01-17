@@ -1,4 +1,4 @@
-.pet-profile-detailed-container{
+.pet-profile-detailed-container {
   /* display: flex;
   flex-direction: row; */
   background-color: white;
@@ -6,7 +6,6 @@
   padding: 30px;
   text-align: center;
 }
-
 
 .pet-profile-container {
   /* display: flex;
@@ -24,54 +23,55 @@
   text-align: center;
   width: 50%;
   max-width: 500px; */
-
 }
-.detail-box{
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    padding: 10px;
-    border: 1px solid lightgrey;
-    margin: 30px;
-    overflow-x:auto;
-    min-width: 800px;
-    padding-bottom: 30px;
-
+.detail-box {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 10px;
+  border: 1px solid lightgrey;
+  margin: 30px;
+  overflow-x: auto;
+  min-width: 800px;
+  padding-bottom: 30px;
 }
 
+h1,
+h2 {
+  font: Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 
-h1, h2 {
-    font:  Helvetica, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
+.add-new {
+  align-content: center;
+}
 
+#vets {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 12px;
+}
 
-  .add-new{
-      align-content: center;
-  }
+#vets td,
+#vets th {
+  border: 1px solid #ddd;
+  padding: 5px;
+}
 
-  #vets {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 12px;
+#vets tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-  }
-  
-  #vets td, #vets th {
-    border: 1px solid #ddd;
-    padding: 5px;
-  }
-  
-  #vets tr:nth-child(even){background-color: #f2f2f2;}
-  
-  #vets tr:hover {background-color: #ddd;}
-  
-  #vets th {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: left;
-    background-color: rgb(122, 72, 72);;
-    color: white;
-  }
+#vets tr:hover {
+  background-color: #ddd;
+}
+
+#vets th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  background-color: rgb(122, 72, 72);
+  color: white;
+}

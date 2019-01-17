@@ -59,7 +59,7 @@ export class App extends React.Component {
                 <Route exact path="/home" component={HomePage} />
                 <Route exact path="/register" component={RegistrationPage} />
                 <Route exact path="/login" component={LoginForm} />
-                <Route exact path="/pet-profile" component={PetProfileForm} />
+                <Route path="/petform/:petId" component={PetProfileForm} />
                 <Route path="/pet-profile/:petId" component={PetProfilePage} />
                 <Route path="/veterinarians/:petId" component={VetForm} />
                 <Route path="/vaccines/:petId" component={VaccineForm} />

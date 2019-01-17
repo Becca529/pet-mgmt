@@ -8,9 +8,7 @@
     margin: 5px;
     background-color: white;
     border-radius: 10px;
-    
   }
-
 
 .container {
     padding: 2px 16px;
@@ -33,15 +31,13 @@
   padding-bottom: 5px;
 }
 
-
 .pet-delete-btn {
   cursor: pointer;
 }
 
-
 .pet-img-temp {
   /* background-color: ; */
-  padding: 8px;
+  padding: 10px;
   border-radius: 100px;
   border: grey solid 4px;
 }

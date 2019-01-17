@@ -13,9 +13,7 @@
   margin-bottom: 20px;
   border-top: black 1px solid;
   border-bottom: black 1px solid;
- 
 }
-
 
 .dashboard{
   padding: 20px;
@@ -25,7 +23,6 @@
   /* flex-direction: column; */
   /* justify-content: center; */
   align-content: center;
-
 }
 
 .dashboard-title {
@@ -36,8 +33,6 @@
 .add-new-profile-btn {
   text-decoration: none;
   color:  rgb(122, 72, 72);
-
-
 }
 
 .pet-profile-list {
@@ -48,8 +43,6 @@
   padding: 10px;
   margin: auto;
   border-top:  rgb(122, 72, 72) solid 15px;
-
-
 }
 
 .pet-list {
@@ -60,9 +53,3 @@
   margin: 5px;
   padding-top: 10px;
 }
-
-
-.add-new-profile{
-  /* text-align: right; */
-}
-

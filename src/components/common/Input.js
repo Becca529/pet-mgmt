@@ -1,45 +1,43 @@
-import React from 'react';
+import React from "react";
 
 export default class Input extends React.Component {
-    componentDidUpdate(prevProps) {
-        if (!prevProps.meta.active && this.props.meta.active) {
-            this.input.focus();
-        }
+  componentDidUpdate(prevProps) {
+    if (!prevProps.meta.active && this.props.meta.active) {
+      this.input.focus();
+    }
+  }
+
+  render() {
+    let error;
+    if (this.props.meta.touched && this.props.meta.error) {
+      error = <div className="form-error">{this.props.meta.error}</div>;
     }
 
-    render() {
-        let error;
-        if (this.props.meta.touched && this.props.meta.error) {
-            error = <div className="form-error">{this.props.meta.error}</div>;
-        }
-
-        let warning;
-        if (this.props.meta.touched && this.props.meta.warning) {
-            warning = (
-                <div className="form-warning">{this.props.meta.warning}</div>
-            );
-        }
-
-        return (
-            <div className="form-input">
-             <div class="row">
-             <div class="col-4">
-                <label htmlFor={this.props.input.name}>
-                    {this.props.label}
-                    {error}
-                    {warning}
-                </label>
-                </div>
-             <div class="col-6">
-                <input
-                    {...this.props.input}
-                    id={this.props.input.name}
-                    type={this.props.type}
-                    ref={input => (this.input = input)}
-                />
-                 </div>
-         </div>
-            </div>
-        );
+    let warning;
+    if (this.props.meta.touched && this.props.meta.warning) {
+      warning = <div className="form-warning">{this.props.meta.warning}</div>;
     }
+
+    return (
+      <div className="form-input">
+        <div className="row">
+          <div className="col-4">
+            <label htmlFor={this.props.input.name}>
+              {this.props.label}
+              {error}
+              {warning}
+            </label>
+          </div>
+          <div className="col-6">
+            <input
+              {...this.props.input}
+              id={this.props.input.name}
+              type={this.props.type}
+              ref={input => (this.input = input)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 }

@@ -1,5 +1,4 @@
 .landing {
-  /* background: url(https://images.pexels.com/photos/731022/pexels-photo-731022.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260) no-repeat center center fixed; */
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -9,19 +8,19 @@
 }
 
 .welcome-container {
-height: 300px;
-margin: auto;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
+  height: 300px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 h1 {
   font-size: 50px;
 }
 
-.welcome-text{
+.welcome-text {
   padding-bottom: 20px;
 }
 .feature-section {
@@ -29,7 +28,6 @@ h1 {
   justify-content: center;
   margin: 15px;
 }
-
 
 .fas {
   color: rgb(122, 72, 72);
