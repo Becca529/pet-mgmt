@@ -37,34 +37,25 @@ export class LoginForm extends React.Component {
                 )}>                
                 {error}
                 <fieldset>
-                <div class="row">
-               <div class="col-4">
-                <label htmlFor="username">Username</label>
-                </div>
-                <div class="col-6">
+               
                 <Field
                     component={Input}
                     type="text"
                     name="username"
                     id="username"
                     validate={[required, nonEmpty]}
+                    label = "Username"
                 />
-                   </div>
-           </div>
-           <div class="row">
-               <div class="col-4">
-                <label htmlFor="password">Password</label>
-                </div>
-               <div class="col-6">
+                             
                 <Field
                     component={Input}
                     type="password"
                     name="password"
                     id="password"
                     validate={[required, nonEmpty]}
+                    label="Password"
                 />
-                  </div>
-           </div>
+                 
            <div class="row">
                 <button 
                     type="submit"

@@ -10,8 +10,9 @@ import {normalizeResponseErrors} from './utils';
 //                                    POST
 // -----------------------------------------------------------------------------
 export const CREATE_VETERINARIAN_SUCCESS = 'CREATE_VETERINARIAN_SUCCESS';
-export const createVeterinarianSuccess =  () => ({
-    type: CREATE_VETERINARIAN_SUCCESS
+export const createVeterinarianSuccess =  (pet) => ({
+    type: CREATE_VETERINARIAN_SUCCESS,
+    pet
 });
 
 export const CREATE_VETERINARIAN_ERROR = 'CREATE_VETERINARIAN_ERROR';
@@ -38,9 +39,9 @@ export const addVeterinarian = (data, petId) => (dispatch, getState) => {
             'Content-Type': 'application/json'
         }
     })
-        //  .then(res => normalizeResponseErrors(res))
-        //  .then(res => res.json())
-        .then(() => dispatch(createVeterinarianSuccess()))
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then(({pet}) => dispatch(createVeterinarianSuccess(pet)))
         .catch(err => {
             dispatch(createVeterinarianError(err));
         });
@@ -72,7 +73,9 @@ export const updateVeterinarian = (updatedPetDetails, petId, subDocId) => (dispa
             'Content-Type': 'application/json'
         }
     })
-        .then(() => dispatch(updateVeterinarianSuccess()))
+        .then(res => normalizeResponseErrors(res))
+        .then(res => res.json())
+        .then(({pet}) => dispatch(updateVeterinarianSuccess(pet)))
         .catch(err => {
             dispatch(updateVeterinarianError(err));
         });

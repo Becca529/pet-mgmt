@@ -6,7 +6,7 @@ import {
     AUTH_ERROR
 } from '../actions/auth';
 
-const initialState = {
+export const initialState = {
     authToken: null, // authToken !== null does not mean it has been validated
     currentUser: null,
     loading: false,

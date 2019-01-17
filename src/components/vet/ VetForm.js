@@ -155,8 +155,10 @@ export class VetForm extends React.Component {
                     component={Input}
                     label="Emergency / After Hours Availability?"
                 /> 
+                <div className="row">
                 {buttonType}
                 <button onClick={this.onClickCancel}><Link className="link-btn" to={`/pet-profile/${petId}`}>Cancel</Link></button>
+                </div>
                 </fieldset>
             </form>
             </div>

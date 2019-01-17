@@ -4,7 +4,7 @@ import {CREATE_VETERINARIAN_BEGIN, CREATE_VETERINARIAN_ERROR, CREATE_VETERINARIA
 import {CREATE_SITTER_FOOD_BEGIN, CREATE_SITTER_FOOD_ERROR, CREATE_SITTER_FOOD_SUCCESS, UPDATE_SITTER_FOOD_ERROR, UPDATE_SITTER_FOOD_SUCCESS, DELETE_SITTER_FOOD_ERROR, DELETE_SITTER_FOOD_SUCCESS} from '../actions/sitters'
 
 
-const initialState = {
+export const initialState = {
     petList: [],
     error: null,
     loading: false,
@@ -12,7 +12,8 @@ const initialState = {
     currentPet: null,
     form: null,
     formStatusEditing: false,
-    currentPetDetail: null
+    currentPetDetail: null,
+    currentVets: []
 };
 
 export default function petprofileReducer (state = initialState, action)  {
@@ -38,7 +39,9 @@ export default function petprofileReducer (state = initialState, action)  {
             return Object.assign({}, state, {
                 currentPet: action.pet,
                 formStatusEditing: true,
-                currentPetDetail: null
+                currentPetDetail: null,
+                currentVets: action.pet.vetData
+
             });
 
         case SET_CURRENT_PET_DETAIL:
@@ -62,7 +65,9 @@ export default function petprofileReducer (state = initialState, action)  {
                 loading: false,
                 redirect: false,
                 currentPet: null,
-                formStatusEditing: false
+                formStatusEditing: false,
+                currentVets: null
+
 
             });
    
@@ -81,7 +86,9 @@ export default function petprofileReducer (state = initialState, action)  {
           loading: false,
           redirect: false,
           currentPet: action.pet,
-          formStatusEditing: false
+          formStatusEditing: false,
+          currentVets: action.pet.vetData
+
 
       });
 
@@ -106,32 +113,25 @@ export default function petprofileReducer (state = initialState, action)  {
             loading: false,
             currentPet: null,
             redirect: false,
-            formStatusEditing: false
+            formStatusEditing: false,
+            currentVets: null,
+
 
     });
 
         case DELETE_PET_SUBDOCUMENT_SUCCESS: 
         console.log("getting to delete success");
+        const newVetData = [...state.vetData.slice(0, action.indexToDelete), ...state.vetData.slice(action.indexToDelete + 1)];
+        const newPet = state.currentPet;
+        newPet.vetData = newVetData;
+
             return Object.assign({}, state, {
                 error: null,
                 redirect: false,
                 formStatusEditing: false,
                 currentPetDetail: null, 
-                currentPet: {
-                    ...state,
-                    vetData: {
-                        ...state.vetData,
-
-                    }.slice(0, action.indexToDelete),
-                    ...state.currentPet.vetData(action.indexToDelete + 1)
-                }
-
-                // currentPet: [
-                //     ...state.filters,
-                //     [vetaData]: []
-
-                // ]
-                //     state.currentPet.vetData.filter(({id}) => id !== action.subDocId)
+                currentVets: newVetData,
+                currentPet: newPet
             });
 
         // case DELETE_PET_PROFILE_ERROR:
@@ -141,7 +141,9 @@ export default function petprofileReducer (state = initialState, action)  {
             error: null,
             redirect: true,
             currentPet: null, 
-            petList: state.petList.filter(({id}) => id !== action.petId)
+            petList: state.petList.filter(({id}) => id !== action.petId),
+            currentVets: null
+
         });
 
         case DELETE_PET_PROFILE_ERROR: 
@@ -152,8 +154,6 @@ export default function petprofileReducer (state = initialState, action)  {
             redirect: false,
 
         });
-
-
 
         case UPDATE_PET_PROFILE_SUCCESS: 
         console.log("getting to update success");
@@ -196,6 +196,9 @@ export default function petprofileReducer (state = initialState, action)  {
                 currentPetDetail: null,
                 form: null,
                 formStatusEditing: false,
+                currentVets: [...state.currentVets, action.vet],
+                currentPet: action.pet
+
 
         });
 
@@ -229,12 +232,12 @@ console.log('getting to update vet success');
     return Object.assign({}, state, {
         loading: false,
         redirect: true,
-        // currentPetDetail: [...state.currentPetDetail, action.vet],
+        currentPetDetail: action.vet,
         form: 'pet-profile',
         formStatusEditing: true,
 
+
     });
-//delete
 
 
 // -----------------------------------------------------------------------------
@@ -263,7 +266,6 @@ console.log('getting to update vet success');
         });
 
 //Update
-//Delete
 
 // -----------------------------------------------------------------------------
 //                                   VACCINE
@@ -291,12 +293,6 @@ console.log('getting to update vet success');
         });
 
         //Update
-        //Delete
-
-
-
-
-
 
         default:
             return state;

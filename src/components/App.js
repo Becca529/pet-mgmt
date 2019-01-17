@@ -56,7 +56,7 @@ export class App extends React.Component {
               <Header />
               <div className="main">
                 <Route exact path="/" component={LandingPage} />
-                <Route path="/home" component={HomePage} />
+                <Route exact path="/home" component={HomePage} />
                 <Route exact path="/register" component={RegistrationPage} />
                 <Route exact path="/login" component={LoginForm} />
                 <Route exact path="/pet-profile" component={PetProfileForm} />

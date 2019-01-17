@@ -31,69 +31,35 @@ export class RegistrationForm extends React.Component {
                 )}>
              <fieldset>
             <legend>Create an Account</legend>
-            <div class="row">
-                <div class="col-4">
-                <label htmlFor="firstName">First name</label>
-                </div>
-                <div class="col-6">
-                <Field component={Input} type="text" name="firstName" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                <label htmlFor="lastName">Last name</label>
-                </div>
-                <div class="col-6">
-                <Field component={Input} type="text" name="lastName" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                <label htmlFor="email">Email</label>
-                </div>
-                <div class="col-6">
-                <Field component={Input} type="email" name="email" validate={required}/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                <label htmlFor="username">Username</label>
-                </div>
-                <div class="col-6">
+            
+                <Field component={Input} type="text" name="firstName" label="First name"/>
+   
+                <Field component={Input} type="text" name="lastName" label="Last name"/>
+    
+                <Field label="Email" component={Input} type="email" name="email" validate={required}/>
+            
                 <Field
                     component={Input}
                     type="text"
                     name="username"
                     validate={[required, nonEmpty, isTrimmed]}
+                    label="Username"
                 />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                <label htmlFor="password">Password</label>
-                </div>
-                <div class="col-6">
+          
                 <Field
                     component={Input}
                     type="password"
                     name="password"
                     validate={[required, passwordLength, isTrimmed]}
+                    label="Password"
                 />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                <label htmlFor="passwordConfirm">Confirm password</label>
-                </div>
-                <div class="col-6">
                 <Field
                     component={Input}
                     type="password"
                     name="passwordConfirm"
                     validate={[required, nonEmpty, matchesPassword]}
+                    label="Confirm password"
                 />
-                </div>
-            </div>
             <div class="row">
                 <button
                     type="submit"

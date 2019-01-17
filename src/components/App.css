@@ -68,6 +68,15 @@ form button {
 
 }
 
+h1, h2 {
+  font:  Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: rgb(95, 95, 95);
+
+}
+
 fieldset {
   border: 0;
 }
@@ -126,3 +135,4 @@ fieldset {
     width: 100%;
   }
 }
+

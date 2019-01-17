@@ -43,11 +43,11 @@ export class PetProfileForm extends React.Component {
 
 
     render() {
-        if(this.props.redirect){
-            return(
-                 <Redirect to="/home"/>
-            )
-        }
+        // if(this.props.redirect){
+        //     return(
+        //          <Redirect to="/home"/>
+        //     )
+        // }
         if (this.props.currentPet){
             // let buttonType = "Edit"
         }
@@ -93,8 +93,6 @@ export class PetProfileForm extends React.Component {
                 validate={[required, nonEmpty]} 
             />
            
-
-          
             <Field
                 name="type"
                 type="text"
@@ -152,8 +150,10 @@ export class PetProfileForm extends React.Component {
                 component={Input}
                 label="Weight"
             />
+            <div className = "row">
             {buttonType}
             <button><Link to="/home">Cancel</Link></button>
+            </div>
             </fieldset>
             </form>    
             </div>    

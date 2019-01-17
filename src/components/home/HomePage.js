@@ -66,7 +66,7 @@ export class HomePage extends React.Component {
                 <div className="divider">
                 </div>
                 <div className="dashboard">
-                    <p className="dashboard-title">My Pet Profiles - {this.props.username}</p>
+                    <h1 className="dashboard-title">My Pet Profiles - {this.props.username}</h1>
                     <button><Link className="add-new-profile-btn" to="/pet-profile">Add New Pet Profile</Link></button>
                     <div className="pet-profile-list">
                         {this.renderPetList()}
