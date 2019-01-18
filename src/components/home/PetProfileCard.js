@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import requiresLogin from "../common/RequiresLogin";
 import "./PetProfileCard.css";
-import { deletePetProfile } from "../../actions/petProfiles";
 
 export function PetProfileCard(props) {
-  
-const { pet } = props;
 
+  const { pet } = props;
   return (
     <div className="pet-profile w3-card">
       <div className="pet-delete-btn">

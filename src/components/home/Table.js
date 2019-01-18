@@ -4,29 +4,28 @@ import "./PetProfileCard.css";
 import "./Table.css";
 
 export function Table(props) {
+  
   if (!props.title) {
     return (
       <>
         <td>{props.title}</td>
-        <td>{props.subtitle}</td>
+        <td>{props.subtitle1}</td>
+        <td>{props.subtitle2}</td>
         <td />
       </>
     );
   }
+
   return (
     <>
       <td>{props.title}</td>
-      <td>{props.subtitle}</td>
+      <td>{props.subtitle1}</td>
+      <td>{props.subtitle2}</td>
       <td className="table-btn">
         <button
           className="link"
           onClick={props.onClickView.bind(this, props.vet, props.route)}>
           View/Edit
-        </button>
-        <button
-          className="link"
-          onClick={props.onClickDelete.bind(this, props.id, props.route)}>
-          Delete
         </button>
       </td>
     </>

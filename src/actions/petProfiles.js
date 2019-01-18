@@ -35,7 +35,7 @@ export const fetchPetProfiles = () => (dispatch, getState) => {
   })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
-    .then(pets => dispatch(fetchPetsSuccess(pets)))
+    .then((pets) => dispatch(fetchPetsSuccess(pets)))
     .catch(error => {
       dispatch(fetchPetsError(error));
     });
@@ -47,9 +47,9 @@ export const fetchPetBegin = () => ({
 });
 
 export const FETCH_PET_SUCCESS = "FETCH_PET_SUCCESS";
-export const fetchPetSuccess = pets => ({
+export const fetchPetSuccess = pet => ({
   type: FETCH_PET_SUCCESS,
-  pets
+  pet
 });
 
 export const FETCH_PET_ERROR = "FETCH_PET_ERROR";
@@ -62,7 +62,7 @@ export const fetchPetProfile = petId => (dispatch, getState) => {
   console.log("getting to fetch profile");
   console.log(petId);
   dispatch(fetchPetBegin());
-  return fetch(`${API_BASE_URL}/pets/{petId}`, {
+  return fetch(`${API_BASE_URL}/pets/${petId}`, {
     method: "GET",
     headers: {
       // Provide our auth token as credentials
@@ -71,7 +71,7 @@ export const fetchPetProfile = petId => (dispatch, getState) => {
   })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
-    .then(pet => dispatch(fetchPetSuccess(pet)))
+    .then((pet) => dispatch(fetchPetSuccess(pet)))
     .catch(error => {
       dispatch(fetchPetError(error));
     });
@@ -243,11 +243,12 @@ export function clearPetDetail() {
   };
 }
 
-
-export const SET_FORM_EDIT = "SET_FORM_EDIT";
-export function setFormEdit(form) {
+export const SET_PAGE_FORM = "SET_PAGE_FORM";
+export function setPageForm(page, form, edit) {
   return {
-    type: SET_FORM_EDIT,
-    form
+    type: SET_PAGE_FORM,
+    page,
+    form,
+    edit
   };
 }

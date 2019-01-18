@@ -2,75 +2,40 @@ import React from 'react';
 import {reduxForm, Field, focus} from 'redux-form';
 import Input from '../common/Input';
 import {required, nonEmpty } from '../../validators';
-import {createPetProfile, updatePetProfile, deletePetProfile, clearPetDetail} from '../../actions/petProfiles';
-import {Redirect, Link} from 'react-router-dom';
+import {createPetProfile, updatePetProfile} from '../../actions/petProfiles';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import './PetProfilePage.css';
 
 
 export class PetProfileForm extends React.Component {
-    
+  
     onSubmit(values) {
         const {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight} = values;
-        const pet = {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight};
-        console.log(pet); 
-        console.log("pet profile form submit button pushed");     
+        const pet = {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight};    
+        
         const petId = this.props.currentPet ? this.props.currentPet.id : null;
-console.log(petId);
         //If there is current pet - dispatch update pet
         if (petId) {
             this.props.dispatch(updatePetProfile(pet, petId));
+            this.props.history.push(`/pet-profile/${this.props.currentPet.id}`)
         }
         //If there is no current pet - dispatch add new pet
         if (!petId)
             this.props.dispatch(createPetProfile(pet));
+            this.props.history.push('/home')
         }
-       
-
-    onClickDelete = () => {
-        let petId = this.props.currentPet.id
-        console.log(petId);
-        console.log("getting back to on clicked delete");
-        
-        //message asking if they are sure they want to delete?
-        this.props.dispatch(deletePetProfile(petId));
-        }
-
-    onClickCancel = () => {
-         this.props.dispatch(clearPetDetail());
-        return <Redirect to={`/pet-profile/${this.props.currentPet.id}`} />;
-
-    }
-
 
     render() {
 
-        //  if(this.props.redirect && !this.props.formStatusEditing){
-        //      return(
-        //           <Redirect to="/home"/>
-        //           )
-        // }
-
-    let petId = this.props.currentPet ? this.props.currentPet.id : null;
-
-       if (!this.props.redirect && !this.props.formStatusEditing && !this.props.form && !petId)  {
-        console.log("redirecting to pet profile from pet form ");
-        return <Redirect to={`/pet-profile/${this.props.currentPet.id}`} />;
-      }
-
-      if (this.props.redirect && !this.props.formStatusEditing) {
-        console.log("redirecting to home from pet form");
-        return <Redirect to="/home" />;
-      }
-
-
-        
+    let petId = this.props.currentPet ? this.props.currentPet.id : null; 
         let errorMessage;
         if (this.props.error) {
             errorMessage = (
                 <div className="message message-error">{this.props.error}</div>
             );
         }   
+
         let buttonType
         //If there is a pet - update pet buttons
         console.log(petId);
@@ -80,15 +45,13 @@ console.log(petId);
                 <button><Link to={`/pet-profile/${this.props.currentPet.id}`}>Cancel</Link></button>
                 </div>)
         }
-        //If there is not a pet - add pet buttons
+        //If there is not a pet in state- add pet buttons
         if (!petId) {
             buttonType = (<div className= "addForm-btn">
             <button type="submit"disabled={this.props.pristine || this.props.submitting}>Submit</button>
             <button><Link to="/home">Cancel</Link></button>
             </div>)
-
         }
-
 
         return (
         <div className="pet-profile-container"> 
@@ -175,24 +138,22 @@ console.log(petId);
     }
 }
 
-
+//Populate form 
 const getInitialValues = (currentPet) => {
     if (currentPet) {
         const { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription  } = currentPet;
         return { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription };
     }
-    // return { petName: '', breed: '', type: '', sex: '', birthdate: '', personality: '', likes: '', dislikes: '', weight: '', physicalDescription: ''};
+    return { petName: '', breed: '', type: '', sex: '', birthdate: '', personality: '', likes: '', dislikes: '', weight: '', physicalDescription: ''};
 }
 
 PetProfileForm = reduxForm({
     form: 'pet-profile', 
     onSubmitFail: (errors, dispatch) => dispatch(focus('pet-profile', 'petName')),
-    // enableReinitialize: true
   })(PetProfileForm)
 
   PetProfileForm = connect(
     (state) => {
-        console.log(state);
          return {
             redirect: state.petprofile.redirect,
             initialValues: getInitialValues(state.petprofile.currentPet),

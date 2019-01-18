@@ -40,7 +40,12 @@ export const addVeterinarian = (data, petId) => (dispatch, getState) => {
   })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
-    .then(({ pet }) => dispatch(createVeterinarianSuccess(pet)))
+    .then((pet) => {
+      dispatch(createVeterinarianSuccess(pet))
+      // console.log(petId);
+  
+      // return history.push(`/pet-profile/${petId}`)
+    })
     .catch(err => {
       dispatch(createVeterinarianError(err));
     });

@@ -8,7 +8,7 @@
 .divider {
   background-image: url(../../imgs/divider-img.jpeg);
   height: 130px;
-  margin-top: 45px;
+  margin-top: 10px;
   background-size: cover;
   margin-bottom: 20px;
   border-top: black 1px solid;
@@ -19,9 +19,6 @@
   padding: 20px;
   margin: auto 0px;
   text-align: center;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: center; */
   align-content: center;
 }
 

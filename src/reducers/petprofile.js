@@ -6,11 +6,9 @@ import {
   FETCH_PET_SUCCESS,
   FETCH_PET_ERROR,
   SET_CURRENT_PET,
-  SET_FORM_EDIT,
   CLEAR_PET_DETAIL,
   CREATE_PET_PROFILE_SUCCESS,
   CREATE_PET_PROFILE_ERROR,
-  CREATE_PET_PROFILE_BEGIN,
   UPDATE_PET_PROFILE_SUCCESS,
   SET_CURRENT_PET_DETAIL,
   UPDATE_PET_PROFILE_ERROR,
@@ -34,8 +32,6 @@ import {
   CREATE_VETERINARIAN_SUCCESS,
   UPDATE_VETERINARIAN_ERROR,
   UPDATE_VETERINARIAN_SUCCESS,
-  DELETE_VETERINARIAN_ERROR,
-  DELETE_VETERINARIAN_SUCCESS
 } from "../actions/veterinarians";
 import {
   CREATE_SITTER_FOOD_BEGIN,
@@ -51,7 +47,6 @@ export const initialState = {
   error: null,
   loading: false,
   redirect: false,
-  page: null,
   form: null,
   formStatusEditing: false,
   petList: [],
@@ -74,20 +69,17 @@ export default function petprofileReducer(state = initialState, action) {
 
     case FETCH_PETS_SUCCESS:
     console.log("action: fetch pets success");
-
       return Object.assign({}, state, {
         petList: action.pets,
         loading: false,
         redirect: false,
         currentPet: null,
         formStatusEditing: false,
-        currentVets: null,
-        page: "home"
+        currentVets: [],
       });
 
       case FETCH_PETS_ERROR:
       console.log("action: fetch pets error");
-
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
@@ -95,7 +87,6 @@ export default function petprofileReducer(state = initialState, action) {
         redirect: false,
         formStatusEditing: false,
         form: null,
-        page: "home"
       });
 
     
@@ -112,7 +103,6 @@ export default function petprofileReducer(state = initialState, action) {
 
     case CREATE_PET_PROFILE_ERROR:
     console.log("action: create profile error");
-
       return Object.assign({}, state, {
         error: action.error
       });
@@ -135,7 +125,6 @@ export default function petprofileReducer(state = initialState, action) {
         redirect: false
       });
 
-
       //Update pet profile
       case UPDATE_PET_PROFILE_SUCCESS:
       console.log("getting to update success");
@@ -154,8 +143,8 @@ export default function petprofileReducer(state = initialState, action) {
         error: action.error,
         formStatusEditing: false,
         currentPet: state.currentPet,
-
       });
+
     //Set current pet
     case SET_CURRENT_PET:
     console.log("action: set current pet");
@@ -165,29 +154,26 @@ export default function petprofileReducer(state = initialState, action) {
         currentPetDetail: null,
         currentVets: action.pet.vetData,
         redirect: false,
-
       });
-
-      
+    
 //Get single pet profile
-    case SET_FORM_EDIT:
-    console.log("action: set form");
-    return Object.assign({}, state, {
-      form: action.form,
-      formStatusEditing: true,
-    });
-
       case FETCH_PET_BEGIN:
       console.log("action: fetch pet begin");
-  
         return Object.assign({}, state, {
           loading: true
         });
   
+      case FETCH_PET_SUCCESS:
+      console.log("action: fetch pet success");
+      return Object.assign({}, state, {
+        loading: false,
+        redirect: false,
+        currentPet: action.pet,
+        formStatusEditing: false,
+      });
 
     case FETCH_PET_ERROR:
     console.log("action: fetch pet error");
-
       return Object.assign({}, state, {
         error: action.error,
         loading: false,
@@ -198,7 +184,7 @@ export default function petprofileReducer(state = initialState, action) {
       });
 
 
-//SUBDOCUMENTS
+//SUBDOCUMENTS - Vet, Vaccine, Pet Sitting Notes
     case DELETE_PET_SUBDOCUMENT_SUCCESS:
       console.log("getting to delete success");
       const newVetData = [
@@ -207,14 +193,23 @@ export default function petprofileReducer(state = initialState, action) {
       ];
       const newPet = state.currentPet;
       newPet.vetData = newVetData;
-
+    
       return Object.assign({}, state, {
         error: null,
         redirect: false,
         formStatusEditing: false,
         currentPetDetail: null,
         currentVets: newVetData,
-        currentPet: newPet
+        currentPet: newPet,
+      });
+
+      case DELETE_PET_SUBDOCUMENT_ERROR:
+      console.log("getting to delete success");
+      return Object.assign({}, state, {
+        error: action.error,
+        redirect: false,
+        formStatusEditing: false,
+        currentPetDetail: null,
       });
 
     //set current pet - detail (ex vet)
@@ -222,7 +217,6 @@ export default function petprofileReducer(state = initialState, action) {
     console.log("action: set current detail pet");
       return Object.assign({}, state, {
         currentPetDetail: action.detail,
-        page: "pet-profile"
       });
 
   //clear current pet - detail
@@ -233,8 +227,8 @@ export default function petprofileReducer(state = initialState, action) {
           form: null,
           formStatusEditing: false,
           redirect: false,
-          page: null
-
+          page: null,
+          error: null,
         });
 
    
@@ -249,15 +243,16 @@ export default function petprofileReducer(state = initialState, action) {
       });
 
     case CREATE_VETERINARIAN_SUCCESS:
+
     console.log("action: create vet success");
+    // let arrayLength = action.pet.vetData.length;
       return Object.assign({}, state, {
         loading: false,
         redirect: true,
         currentPetDetail: null,
         form: null,
         formStatusEditing: false,
-        currentVets: [...state.currentVets, action.vet],
-        currentPet: action.pet
+        currentPet: action.pet 
       });
 
     case CREATE_VETERINARIAN_ERROR:
@@ -271,8 +266,7 @@ export default function petprofileReducer(state = initialState, action) {
         formStatusEditing: false
       });
 
-    //Update
-
+    //Update Vet
     case UPDATE_VETERINARIAN_ERROR:
     console.log("action: update vet error");
       return Object.assign({}, state, {
@@ -318,7 +312,6 @@ export default function petprofileReducer(state = initialState, action) {
         redirect: false
       });
 
-    //Update
 
     // -----------------------------------------------------------------------------
     //                                   VACCINE

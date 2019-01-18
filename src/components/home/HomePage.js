@@ -15,25 +15,17 @@ import PetProfileCard from "./PetProfileCard";
 export class HomePage extends React.Component {
   
   componentDidMount() {
-    this.props.dispatch(fetchPetProfiles());
     this.props.dispatch(clearPetDetail());
-
+    this.props.dispatch(fetchPetProfiles());
   }
-
 
   //Delete Pet profile (x) on profile cards - props passed to card component
   onClickDelete = petId => {
-    console.log(petId);
-    console.log("getting back to on clicked delete");
-
     this.props.dispatch(deletePetProfile(petId));
   };
 
   //View pet profile on profile cards - props passed to card component
   onClick = selectedPet => {
-    console.log(selectedPet);
-    console.log("getting back to onclick view");
-
     this.props.dispatch(setCurrentPet(selectedPet));
   };
 
@@ -45,10 +37,11 @@ export class HomePage extends React.Component {
     }
 
     if (error) {
-      return <strong>{this.props.error}</strong>;
+      return <strong>{error}</strong>;
     }
 
-    const petList = this.props.pets.map(pet => (
+    //Display current user pets
+    const petList = pets.map(pet => (
       <li key={pet.id}>
         <PetProfileCard
           onClick={this.onClick}
