@@ -9,7 +9,7 @@ export class Header extends React.Component {
   logOut() {
     this.props.dispatch(clearAuth());
     clearAuthToken();
-    return <Redirect to="/" />;
+     return <Redirect to="/" />;
   }
 
   render() {

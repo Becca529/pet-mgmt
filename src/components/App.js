@@ -5,13 +5,10 @@ import {Route, withRouter} from 'react-router-dom';
 import Header from './common/Header';
 import LandingPage from './landing/LandingPage';
 import RegistrationPage from './register/RegistrationPage';
-// import LoginPage from './login/LoginPage';
  import LoginForm from './login/LoginForm';
 
 import HomePage from './home/HomePage';
 import VetForm from './vet/ VetForm';
-import VaccineForm from './vaccine/VaccineForm';
-import FoodForm from './pet-sitting/FoodForm';
 import PetProfilePage from './home/PetProfilePage';
 
 import PetProfileForm from './home/PetProfileForm';
@@ -62,8 +59,6 @@ export class App extends React.Component {
                 <Route path="/petform/:petId" component={PetProfileForm} />
                 <Route path="/pet-profile/:petId" component={PetProfilePage} />
                 <Route path="/veterinarians/:petId" component={VetForm} />
-                <Route path="/vaccines/:petId" component={VaccineForm} />
-                <Route path="/sitters/:petId" component={FoodForm} />
                 </div>
           </div>
       );

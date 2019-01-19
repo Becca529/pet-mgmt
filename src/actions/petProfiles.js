@@ -80,7 +80,7 @@ export const fetchPetProfile = petId => (dispatch, getState) => {
 //                                    POST
 // -----------------------------------------------------------------------------
 export const CREATE_PET_PROFILE_SUCCESS = "CREATE_PET_PROFILE_SUCCESS";
-export const createPetProfileSucess = pet => ({
+export const createPetProfileSuccess = pet => ({
   type: CREATE_PET_PROFILE_SUCCESS,
   pet
 });
@@ -110,7 +110,7 @@ export const createPetProfile = data => (dispatch, getState) => {
   })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
-    .then((pet) => dispatch(createPetProfileSucess(pet)))
+    .then((pet) => dispatch(createPetProfileSuccess(pet)))
     .catch(err => {
       dispatch(createPetProfileError(err));
     });

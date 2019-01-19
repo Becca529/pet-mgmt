@@ -1,44 +1,125 @@
-import {fetchPetBegin, fetchPetProfiles, fetchPetSuccess, FETCH_PETS_SUCCESS, FETCH_PETS_BEGIN, FETCH_PETS_ERROR, FETCH_PET_BEGIN, FETCH_PET_SUCCESS, FETCH_PET_ERROR, SET_CURRENT_PET, CLEAR_PET_DETAIL, CREATE_PET_PROFILE_SUCCESS, CREATE_PET_PROFILE_ERROR, CREATE_PET_PROFILE_BEGIN, UPDATE_PET_PROFILE_SUCCESS, SET_CURRENT_PET_DETAIL, UPDATE_PET_PROFILE_ERROR, DELETE_PET_SUBDOCUMENT_ERROR, DELETE_PET_SUBDOCUMENT_SUCCESS,DELETE_PET_PROFILE_ERROR, DELETE_PET_PROFILE_SUCCESS} from '../../../src/actions/petProfiles'
-
+import {fetchPetsBegin, fetchPetProfiles, fetchPetError, fetchPetsError, fetchPetsSuccess, fetchPetSuccess, FETCH_PETS_SUCCESS, FETCH_PETS_BEGIN, FETCH_PETS_ERROR, 
+    createPetProfileError, createPetProfileSuccess, FETCH_PET_BEGIN, FETCH_PET_SUCCESS, FETCH_PET_ERROR, 
+    CREATE_PET_PROFILE_SUCCESS, CREATE_PET_PROFILE_ERROR, fetchPetBegin } 
+from '../../../src/actions/petProfiles'
+import {createVeterinarianSuccess, CREATE_VETERINARIAN_SUCCESS, createVeterinarianError, CREATE_VETERINARIAN_ERROR } from '../../../src/actions/veterinarians'
 import {API_BASE_URL} from '../../config';
 
 
-describe('fetchPetProfiles', () => {
-    it('Should return the action', () => {
-        const data = {data:'my pets'};
-        const action = fetchPetProfiles(data);
+
+describe('fetchPetsSuccess', () => {
+    it('should return the action', () => {
+        const pets = {pets: []};
+        const action = fetchPetsSuccess(pets);
         expect(action.type).toEqual(FETCH_PETS_SUCCESS);
-        expect(action.data).toEqual(data);
+        expect(action.pets).toEqual(pets);
     });
 });
 
-describe('fetchPetProfiles', () => {
-    it('Should dispatch fetchPetSuccess after fetchPetProfiles', () => {
-        const data = [{
-            authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoicmFpbiIsIm5hbWUiOiJOaWNlIFJhaW4ifSwiaWF0IjoxNTQ2NzM4ODY2LCJleHAiOjE1NDczNDM2NjYsInN1YiI6InJhaW4ifQ.dSgevVZJee2QZSGWX9UZ-zMQDhfoicxMcw4mUMV4S6w",
-        }];
 
-        global.fetch = jest.fn().mockImplementation(() =>
-            Promise.resolve({
-                ok: true,
-                json() {
-                    return data;
-                }
-            })
-        );
-
-        const dispatch = jest.fn();
-        return fetchPetProfiles()(dispatch).then(() => {
-            expect(fetch).toHaveBeenCalledWith(`${API_BASE_URL}/pets/`,
-            {
-                'headers':{
-                    'content-type':'application/json',
-                    'Authorization':`Bearer ${null}`
-                },
-                'method':'GET'
-            });
-            expect(dispatch).toHaveBeenCalledWith(fetchPetBegin());
-            expect(dispatch).toHaveBeenCalledWith(fetchPetSuccess(data));
-        });
+describe('fetchPetsBegin', () => {
+    it('should return the action', () => {
+        const action = fetchPetsBegin();
+        expect(action.type).toEqual(FETCH_PETS_BEGIN);
     });
 });
+
+describe('fetchPetsError', () => {
+    it('should return the action', () => {
+        const err = 'some error';
+        const action = fetchPetsError(err);
+        expect(action.type).toEqual(FETCH_PETS_ERROR);
+        expect(action.error).toEqual(err);
+    });
+});
+
+describe('fetchPetSuccess', () => {
+    it('should return the action', () => {
+        const pet = [];
+        const action = fetchPetSuccess(pet);
+        expect(action.type).toEqual(FETCH_PET_SUCCESS);
+        expect(action.pet).toEqual(pet);
+    });
+});
+
+describe('fetchPetBegin', () => {
+    it('should return the action', () => {
+        const action = fetchPetBegin();
+        expect(action.type).toEqual(FETCH_PET_BEGIN);
+    });
+});
+
+describe('fetchPetError', () => {
+    it('should return the action', () => {
+        const err = 'some error';
+        const action = fetchPetError(err);
+        expect(action.type).toEqual(FETCH_PET_ERROR);
+        expect(action.error).toEqual(err);
+    });
+});
+
+
+describe('createPetProfileError', () => {
+    it('should return the action', () => {
+        const err = 'some error';
+        const action = createPetProfileError(err);
+        expect(action.type).toEqual(CREATE_PET_PROFILE_ERROR);
+        expect(action.error).toEqual(err);
+    });
+});
+
+describe('createPetProfileSuccess', () => {
+    it('should return the action', () => {
+        const pet = [];
+        const action = createPetProfileSuccess(pet);
+        expect(action.type).toEqual(CREATE_PET_PROFILE_SUCCESS);
+        expect(action.pet).toEqual(pet);
+    });
+});
+
+//Create Vet
+describe('createVetSuccess', () => {
+    it('should return the action', () => {
+        const pet = [];
+        const action = createVeterinarianSuccess(pet);
+        expect(action.type).toEqual(CREATE_VETERINARIAN_SUCCESS);
+        expect(action.pet).toEqual(pet);
+    });
+});
+
+describe('createVetError', () => {
+    it('should return the action', () => {
+        const err = 'some error';
+        const action = createVeterinarianError(err);
+        expect(action.type).toEqual(CREATE_VETERINARIAN_ERROR);
+        expect(action.error).toEqual(err);
+    });
+});
+
+
+// describe('fetchPetProfiles', () => {
+//     it('should dispatch fetchProfilesBegin and fetchProfilesSuccess', () => {
+//         const expectedApiUrl = `${API_BASE_URL}/pets`;
+//         const expectedHeaders = {"headers": {"map": {"authorization": "Bearer null", "content-type": "application/json"}}, "method": "get"};
+//         const pets = {mock: true};
+
+//         global.fetch = jest.fn().mockImplementation(() => {
+//             return Promise.resolve({
+//                 ok: true,
+//                 json() {
+//                     return pets;
+//                 }
+//             })
+//         });
+
+//         const dispatch = jest.fn();
+
+//         return fetchPetProfiles()(dispatch).then(() => {
+//             expect(fetch).toHaveBeenCalledWith(expectedApiUrl, expectedHeaders);
+//             expect(dispatch).toHaveBeenCalledWith(fetchPetProfiles());
+//             expect(dispatch).toHaveBeenCalledWith(fetchPetSuccess(pets))
+//         })
+//     });
+// });
+
+

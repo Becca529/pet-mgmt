@@ -3,8 +3,15 @@ import {SubmissionError} from 'redux-form';
 import {API_BASE_URL} from '../config';
 import {normalizeResponseErrors} from './utils';
 
+
+export const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
+export const registerUserError = error => ({
+  type: REGISTER_USER_ERROR,
+  error
+});
+
+
 export const registerUser = user => dispatch => {
-    console.log("got to registerUser action");
     return fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: {

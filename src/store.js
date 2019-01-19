@@ -4,7 +4,7 @@ import {reducer as formReducer} from 'redux-form';
 import thunk from 'redux-thunk';
 import {loadAuthToken} from './local-storage';
 import authReducer from './reducers/auth';
-import petprofileReducer from './reducers/petprofile';
+import {petprofileReducer} from './reducers/petprofile';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
 
 const store = createStore(

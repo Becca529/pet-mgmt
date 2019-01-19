@@ -3,6 +3,7 @@ import { Field, reduxForm, focus } from "redux-form";
 import { registerUser } from "../../actions/users";
 import { login } from "../../actions/auth";
 import Input from "../common/Input";
+import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
 import "./RegistrationPage.css";
 import {
@@ -26,15 +27,24 @@ export class RegistrationForm extends React.Component {
   }
 
   render() {
+    let error;
+    if (this.props.error) {
+        error = (
+            <div className="form-error" aria-live="polite">
+                {this.props.error}
+            </div>
+        );
+    }
+
+
     return (
       <form
         id="registration-form"
         className="registration-form"
-        onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
-      >
+        onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
+        {error}
         <fieldset>
           <legend>Create an Account</legend>
-
           <Field
             component={Input}
             type="text"
@@ -101,8 +111,19 @@ export class RegistrationForm extends React.Component {
     );
   }
 }
-export default reduxForm({
-  form: "registration",
-  onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("registration", Object.keys(errors)[0]))
+
+
+RegistrationForm = reduxForm({
+  form: 'registration', 
+  onSubmitFail: (errors, dispatch) => dispatch(focus('registration', 'firstName')),
+})(RegistrationForm)
+
+
+RegistrationForm = connect(state => {
+  return {
+    registerError: state.petprofile.registerError
+  };
 })(RegistrationForm);
+     
+export default RegistrationForm
+ 

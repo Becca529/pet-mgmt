@@ -1,10 +1,19 @@
-import {fetchPetBegin, fetchPetProfiles, fetchPetSuccess, FETCH_PETS_SUCCESS, FETCH_PETS_BEGIN, FETCH_PETS_ERROR, FETCH_PET_BEGIN, FETCH_PET_SUCCESS, FETCH_PET_ERROR, SET_CURRENT_PET, CLEAR_PET_DETAIL, CREATE_PET_PROFILE_SUCCESS, CREATE_PET_PROFILE_ERROR, CREATE_PET_PROFILE_BEGIN, UPDATE_PET_PROFILE_SUCCESS, SET_CURRENT_PET_DETAIL, UPDATE_PET_PROFILE_ERROR, DELETE_PET_SUBDOCUMENT_ERROR, DELETE_PET_SUBDOCUMENT_SUCCESS,DELETE_PET_PROFILE_ERROR, DELETE_PET_PROFILE_SUCCESS} from '../../../src/actions/petProfiles'
+import {fetchPetsBegin, fetchPetError, fetchPetsError, fetchPetsSuccess, fetchPetSuccess, 
+    createPetProfileError, createPetProfileSuccess, fetchPetBegin, clearPetDetail,} 
+from '../../../src/actions/petProfiles'
+import {createVeterinarianSuccess, createVeterinarianError} from '../../../src/actions/veterinarians'
 import {petprofileReducer, initialState} from '../../../src/reducers/petprofile';
 
 
 
-
 describe('petprofileReducer', () => {
+
+    const petName1 = 'Jamers';
+    const petName2 = 'Remy';
+    const pet1 = {petName: petName1};
+    const pet2 = {petName: petName2};
+    const vetDetail1 = {clinicName: 'Cliffs Vet'}
+
     it('Should set the initial state when nothing is passed in', () => {
         const state = petprofileReducer(undefined, { type: '__UNKNOWN'});
         expect(state).toEqual(initialState);
@@ -16,47 +25,152 @@ describe('petprofileReducer', () => {
         expect(state).toBe(currentState);
     });
 
-    // it('Should clear current pet', () => {
-    //     let clearPetState = {
-    //         currentPetDetail: null,
-    //         form: null,
-    //         formStatusEditing: false,
-    //     };
-    //     const state = petprofileReducer(clearPetState, { type: 'CLEAR_PET_DETAIL' });
-    //     expect(state).toBe(clearPetState );
+    describe('fetchPetProfile ', () => {
+        it('Should add users pets to petlist array in state', () => {
+            let currentState = {};
+             const state = petprofileReducer(currentState, fetchPetsSuccess(pet2));
+             expect(state.petList).toEqual(pet2);
+        });
+
+        it('Should change to loading when fetchPetsbegin', () => {
+            let currentState = {
+                loading: false
+            };
+             const state = petprofileReducer(currentState, fetchPetsBegin());
+             expect(state.loading).toEqual(true);
+        });
+
+        it('Should add errors to state if issue', () => {
+            let currentState = {
+                error: null
+            };
+            const err = 'some error'
+             const state = petprofileReducer(currentState, fetchPetsError(err));
+             expect(state.error).toEqual(err);
+        });
+
+    });
+
+    describe('createPetProfile ', () => {
+        it('Should add new pet to petlist array in state', () => {
+            let currentState = {
+                petList: []
+            };
+             const state = petprofileReducer(currentState, createPetProfileSuccess(pet1));
+             expect(state.petList).toEqual([...currentState.petList, pet1]);
+        });
+
+        it('Should add errors to state if issue', () => {
+            let currentState = {
+                error: null
+            };
+            const err = 'some error'
+            const state = petprofileReducer(currentState, createPetProfileError(err));
+            expect(state.error).toEqual(err);
+        });
+    });
 
 
-  });
+    describe('fetchPetProfile', () => {
+        it('Should add pet to current pet in state', () => {
+            let currentState = {
+                currentPet: null
+            };
+            const state = petprofileReducer(currentState, fetchPetSuccess(pet1));
+            expect(state.currentPet).toEqual(pet1);
+        });
 
+        it('Should change to loading when fetchPetbegin', () => {
+            let currentState = {
+                loading: false
+            };
+             const state = petprofileReducer(currentState, fetchPetBegin());
+             expect(state.loading).toEqual(true);
+        });
 
-        // case SET_CURRENT_PET: 
-        // console.log('getting to set current pet');
-        //     return Object.assign({}, state, {
-        //         currentPet: action.pet,
-        //         formStatusEditing: true,
-        //         currentPetDetail: null
-        //     });
+        it('Should add errors to state if issue', () => {
+            let currentState = {
+                error: null
+            };
+            const err = 'some error'
+             const state = petprofileReducer(currentState, fetchPetError(err));
+             expect(state.error).toEqual(err);
+        });
 
-        // case SET_CURRENT_PET_DETAIL:
-        //     return Object.assign({}, state, {
-        //         currentPetDetail: action.detail,
-        //         form: action.form,
-        //         formStatusEditing: true,
+    });
 
-        //     });
-        
-        //     case CLEAR_PET_DETAIL:
-        //     return Object.assign({}, state, {
-        //         currentPetDetail: null,
-        //         form: null,
-        //         formStatusEditing: false,
-        //     });
+    describe('add vet', () => {
+        it('Should add pet to current pet in state', () => {
+            let currentState = {
+                currentPet: null
+            };
+            const state = petprofileReducer(currentState, createVeterinarianSuccess(pet1));
+            expect(state.currentPet).toEqual(pet1);
+        });
+
+        it('Should add errors to state if issue', () => {
+            let currentState = {
+                error: null
+            };
+            const err = 'some error'
+             const state = petprofileReducer(currentState, createVeterinarianError(err));
+             expect(state.error).toEqual(err);
+        });
+
+    });
+
+    describe('clearPetDetail ', () => {
+        it('Should clear pet detail', () => {
+            let currentState = {
+                currentPetDetail: vetDetail1
+            };
+             const state = petprofileReducer(currentState, clearPetDetail());
+             expect(state.currentPetDetail).toEqual([]);
+        });
+    });
     
 
 
+    
 
 
+    // describe('fetchPetsSuccess', () => {
+    //     it('Should add all pets to state', () => {
+    //         const currentState = {
+    //             petList: {
+    //                 petName: ['jamers', 'remy']
+    //             },
+    //             loading: true,
+    //         };
+    //         const data = 'my new pet';
+    //         const state = petprofileReducer(currentState, fetchPetsSuccess(data));
+    //         expect(state.petList.shareClasses).toEqual([...currentState.companyData.shareClasses, data]);
+    //         expect(state.loading).toEqual(false);
+    //     });
+    // });
 
 
+});
 
+//     it('Should return the current state on an unknown action', () => {
+//         let currentState = {};
+//         const state = petprofileReducer(currentState, { type: '__UNKNOWN' });
+//         expect(state).toBe(currentState);
+//     });
+
+//     describe('addPetSuccess', () => {
+//         it('should =', () => {
+//             const currentState = {
+//                 companyData: {
+//                     shareClasses: ['some value', 'some other value']
+//                 },
+//                 loading: true,
+//                 redirect: false
+//             };
+//             const data = 'my new data';
+//             const state = investmentReducer(currentState, addShareClassSuccess(data));
+//             expect(state.companyData.shareClasses).toEqual([...currentState.companyData.shareClasses, data]);
+//             expect(state.loading).toEqual(false);
+//             expect(state.redirect).toEqual('/');
+ 
   

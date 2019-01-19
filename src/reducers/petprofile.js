@@ -1,3 +1,4 @@
+import {REGISTER_USER_ERROR} from "../actions/users";
 import {
   FETCH_PETS_SUCCESS,
   FETCH_PETS_BEGIN,
@@ -18,30 +19,13 @@ import {
   DELETE_PET_PROFILE_SUCCESS
 } from "../actions/petProfiles";
 import {
-  CREATE_VACCINE_BEGIN,
-  CREATE_VACCINE_SUCCESS,
-  CREATE_VACCINE_ERROR,
-  UPDATE_VACCINE_ERROR,
-  UPDATE_VACCINE_SUCCESS,
-  DELETE_VACCINE_ERROR,
-  DELETE_VACCINE_SUCCESS
-} from "../actions/vaccines";
-import {
   CREATE_VETERINARIAN_BEGIN,
   CREATE_VETERINARIAN_ERROR,
   CREATE_VETERINARIAN_SUCCESS,
   UPDATE_VETERINARIAN_ERROR,
   UPDATE_VETERINARIAN_SUCCESS,
 } from "../actions/veterinarians";
-import {
-  CREATE_SITTER_FOOD_BEGIN,
-  CREATE_SITTER_FOOD_ERROR,
-  CREATE_SITTER_FOOD_SUCCESS,
-  UPDATE_SITTER_FOOD_ERROR,
-  UPDATE_SITTER_FOOD_SUCCESS,
-  DELETE_SITTER_FOOD_ERROR,
-  DELETE_SITTER_FOOD_SUCCESS
-} from "../actions/sitters";
+
 
 export const initialState = {
   error: null,
@@ -52,10 +36,11 @@ export const initialState = {
   petList: [],
   currentPet: null,
   currentPetDetail: null,
-  currentVets: []
+  currentVets: [],
+  registerError: null
 };
 
-export default function petprofileReducer(state = initialState, action) {
+export function petprofileReducer(state = initialState, action) {
   switch (action.type) {
     // -----------------------------------------------------------------------------
     //                                    PET PROFILE
@@ -120,7 +105,6 @@ export default function petprofileReducer(state = initialState, action) {
     case DELETE_PET_PROFILE_ERROR:
       console.log("getting to delete error");
       return Object.assign({}, state, {
-        // currentPetDetail: [...state.currentPetDetail, action.pet],
         error: action.error,
         redirect: false
       });
@@ -138,7 +122,6 @@ export default function petprofileReducer(state = initialState, action) {
     case UPDATE_PET_PROFILE_ERROR:
     console.log("getting to update success");
       return Object.assign({}, state, {
-        // petList: [...state.petList, action.pet],
         redirect: false,
         error: action.error,
         formStatusEditing: false,
@@ -229,9 +212,17 @@ export default function petprofileReducer(state = initialState, action) {
           redirect: false,
           page: null,
           error: null,
+          registerError: null
         });
 
-   
+    // -----------------------------------------------------------------------------
+    //                                   USERS
+    // -----------------------------------------------------------------------------
+    case REGISTER_USER_ERROR:
+    console.log("action: register user error");
+      return Object.assign({}, state, {
+        registerError: action.error
+      });
     // -----------------------------------------------------------------------------
     //                                   VET
     // -----------------------------------------------------------------------------
@@ -243,9 +234,7 @@ export default function petprofileReducer(state = initialState, action) {
       });
 
     case CREATE_VETERINARIAN_SUCCESS:
-
     console.log("action: create vet success");
-    // let arrayLength = action.pet.vetData.length;
       return Object.assign({}, state, {
         loading: false,
         redirect: true,
@@ -286,59 +275,6 @@ export default function petprofileReducer(state = initialState, action) {
         form: "pet-profile",
         formStatusEditing: true
       });
-
-    // -----------------------------------------------------------------------------
-    //                                   SITTERS
-    // -----------------------------------------------------------------------------
-
-    case CREATE_SITTER_FOOD_BEGIN:
-      console.log("getting to create sub begin");
-      return Object.assign({}, state, {
-        loading: true
-      });
-
-    case CREATE_SITTER_FOOD_SUCCESS:
-      console.log("getting to create sub success");
-      return Object.assign({}, state, {
-        loading: false,
-        redirect: true
-      });
-
-    case CREATE_SITTER_FOOD_ERROR:
-      console.log("getting to create sub error");
-      return Object.assign({}, state, {
-        error: action.error,
-        loading: false,
-        redirect: false
-      });
-
-
-    // -----------------------------------------------------------------------------
-    //                                   VACCINE
-    // -----------------------------------------------------------------------------
-
-    case CREATE_VACCINE_BEGIN:
-      console.log("getting to create sub begin");
-      return Object.assign({}, state, {
-        loading: true
-      });
-
-    case CREATE_VACCINE_SUCCESS:
-      console.log("getting to create sub success");
-      return Object.assign({}, state, {
-        loading: false,
-        redirect: true
-      });
-
-    case CREATE_VACCINE_ERROR:
-      console.log("getting to create sub error");
-      return Object.assign({}, state, {
-        error: action.error,
-        loading: false,
-        redirect: false
-      });
-
-    //Update
 
     default:
       return state;
