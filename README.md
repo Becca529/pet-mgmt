@@ -18,7 +18,7 @@ Note: This is a minimum viable product prototype for a larger application. This 
 
 ## Demo
 
-[Live demo (Heroku)]....
+[Live demo (Heroku)](https://salty-falls-18465.herokuapp.com/)
 
 Login with the following:
 * username: TestUser1
