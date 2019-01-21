@@ -83,5 +83,5 @@ LoginForm = connect(mapStateToProps)(LoginForm);
 
 export default reduxForm({
   form: "login",
-  onSubmitFail: (errors, dispatch) => dispatch(focus("login", "username"))
+  // onSubmitFail: (errors, dispatch) => dispatch(focus("login", "username"))
 })(LoginForm);
