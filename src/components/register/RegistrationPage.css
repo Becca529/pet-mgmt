@@ -1,8 +1,6 @@
 .registration-form {
-  margin: 0 auto;
-  text-align: center;
   margin-top: 80px;
-  width: 500px;
+  max-width: 500px;
 }
 
 .registeration-container {
