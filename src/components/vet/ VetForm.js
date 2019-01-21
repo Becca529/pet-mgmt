@@ -10,8 +10,8 @@ import { connect } from "react-redux";
 
 export class VetForm extends React.Component {
   onSubmit(values) {
-    const { clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor} = values;
-    const vet = { clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor};
+    const { clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor, emergencyAfterHours} = values;
+    const vet = { clinicName, addressLine1, addressLine2, city, zipCode, state, phoneNumber, faxNumber, email, doctor, emergencyAfterHours};
     const petId = this.props.currentPet ? this.props.currentPet.id : null;
     const vetId = this.props.currentPetDetail ? this.props.currentPetDetail._id : null;
 
@@ -101,21 +101,27 @@ export class VetForm extends React.Component {
             <Field name="city" type="text" component={Input} label="City" />
             <Field
               name="zipCode"
-              type="date"
+              type="text"
               component={Input}
               label="Zip Code"
             />
             <Field
               name="phoneNumber"
-              type="text"
+              type="tel"
               component={Input}
               label="Phone Number"
             />
             <Field
               name="faxNumber"
-              type="text"
+              type="tel"
               component={Input}
               label="Fax Number"
+            />
+               <Field
+              name="doctor"
+              type="text"
+              component={Input}
+              label="Doctor"
             />
             <Field name="email" type="email" component={Input} label="Email" />
             <Field
