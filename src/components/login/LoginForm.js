@@ -76,7 +76,8 @@ export class LoginForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    loggedIn: state.auth.currentUser
+    loggedIn: state.auth.currentUser,
+    error: state.auth.error
   };
 };
 
