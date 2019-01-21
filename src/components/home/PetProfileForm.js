@@ -11,8 +11,8 @@ import './PetProfilePage.css';
 export class PetProfileForm extends React.Component {
   
     onSubmit(values) {
-        const {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight} = values;
-        const pet = {petName, breed, sex, type, birthdate, personality, likes, dislikes, physicalDescription, weight};    
+        const {petName, breed, sex, type, personality, likes, dislikes, physicalDescription, weight} = values;
+        const pet = {petName, breed, sex, type, personality, likes, dislikes, physicalDescription, weight};    
         
         const petId = this.props.currentPet ? this.props.currentPet.id : null;
         //If there is current pet - dispatch update pet
@@ -90,13 +90,6 @@ export class PetProfileForm extends React.Component {
                 component={Input}
                 label="Sex"
             />
-            
-             <Field
-                name="birthdate"
-                type="date"
-                component={Input}
-                label="Birthdate"
-            />
               <Field
                 name="personality"
                 type="text"
@@ -141,8 +134,8 @@ export class PetProfileForm extends React.Component {
 //Populate form 
 const getInitialValues = (currentPet) => {
     if (currentPet) {
-        const { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription  } = currentPet;
-        return { petName, breed, type, sex, birthdate, personality, likes, dislikes, weight, physicalDescription };
+        const { petName, breed, type, sex, personality, likes, dislikes, weight, physicalDescription  } = currentPet;
+        return { petName, breed, type, sex, personality, likes, dislikes, weight, physicalDescription };
     }
     return { petName: '', breed: '', type: '', sex: '', birthdate: '', personality: '', likes: '', dislikes: '', weight: '', physicalDescription: ''};
 }

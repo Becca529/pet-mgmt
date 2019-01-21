@@ -36,9 +36,9 @@ export class HomePage extends React.Component {
       return <Spinner spinnername="circle" fadeIn="none" />;
     }
 
-    if (error) {
-      return <strong>{error}</strong>;
-    }
+    // if (error) {
+    //   return <strong>{error}</strong>;
+    // }
 
     //Display current user pets
     const petList = pets.map(pet => (
