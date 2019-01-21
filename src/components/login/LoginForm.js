@@ -34,7 +34,6 @@ export class LoginForm extends React.Component {
         >
           {error}
           <fieldset>
-          <label htmlFor="username">Username</label>
             <Field
               component={Input}
               type="text"
@@ -43,7 +42,6 @@ export class LoginForm extends React.Component {
               validate={[required, nonEmpty]}
               label="Username"
             />
-            <label htmlFor="password">Password</label>
             <Field
               component={Input}
               type="password"
@@ -77,7 +75,7 @@ export class LoginForm extends React.Component {
 const mapStateToProps = state => {
   return {
     loggedIn: state.auth.currentUser,
-    error: state.auth.error
+    // error: state.auth.error
   };
 };
 
