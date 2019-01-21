@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import {SubmissionError} from 'redux-form';
+
 
 import {API_BASE_URL} from '../config';
 import {normalizeResponseErrors} from './utils';
@@ -65,14 +65,7 @@ export const login = (username, password) => dispatch => {
                     code === 401
                         ? 'Incorrect username or password'
                         : 'Unable to login, please try again';
-                console.log(err)
                 dispatch(authError(message));
-               
-                // return Promise.reject(
-                //     new SubmissionError({
-                //         _error: message
-                //     })
-                // );
             })
     );
 };

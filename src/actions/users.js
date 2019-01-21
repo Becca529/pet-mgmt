@@ -1,9 +1,6 @@
 import {SubmissionError} from 'redux-form';
-
 import {API_BASE_URL} from '../config';
 import {normalizeResponseErrors} from './utils';
-
-
 export const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
 export const registerUserError = error => ({
   type: REGISTER_USER_ERROR,
@@ -33,3 +30,5 @@ export const registerUser = user => dispatch => {
             }
         });
 };
+
+

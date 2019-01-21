@@ -1,13 +1,18 @@
 import React from "react";
-import { Field, reduxForm, focus } from "redux-form";
+import { Field, reduxForm} from "redux-form";
 import Input from "../common/Input";
-import { login } from "../../actions/auth";
+import { login, clearAuth } from "../../actions/auth";
 import { required, nonEmpty } from "../../validators";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import "./LoginForm.css";
 
 export class LoginForm extends React.Component {
+  
+  componentDidMount() {
+    this.props.dispatch(clearAuth());
+  }
+  
   onSubmit(values) {
     return this.props.dispatch(login(values.username, values.password));
   }
@@ -83,5 +88,4 @@ LoginForm = connect(mapStateToProps)(LoginForm);
 
 export default reduxForm({
   form: "login",
-  // onSubmitFail: (errors, dispatch) => dispatch(focus("login", "username"))
 })(LoginForm);
