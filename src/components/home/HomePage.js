@@ -30,15 +30,11 @@ export class HomePage extends React.Component {
   };
 
   renderPetList() {
-    const { error, loading, pets} = this.props;
+    const { loading, pets} = this.props;
 
     if (loading) {
       return <Spinner spinnername="circle" fadeIn="none" />;
     }
-
-    // if (error) {
-    //   return <strong>{error}</strong>;
-    // }
 
     //Display current user pets
     const petList = pets.map(pet => (

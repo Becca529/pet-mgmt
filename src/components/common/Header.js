@@ -9,12 +9,20 @@ export class Header extends React.Component {
   logOut() {
     this.props.dispatch(clearAuth());
     clearAuthToken();
-     return <Redirect to="/" />;
+    // this.props.history.push("/")
+    // return <Redirect to="/" />;
+
+    return <Redirect to="/" />;
   }
 
   render() {
     if (this.props.loggedIn) {
+
       let logOutButton = (
+    //     <Link to="/">
+    //     <i className="fa fa-sign-out pull-right" onClick={() => this.logOut()}></i> 
+    //     Log Out
+    // </Link>
         <button className="link-btn" onClick={() => this.logOut()}>
           Log out
         </button>

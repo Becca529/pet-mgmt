@@ -6,6 +6,7 @@ import {
     AUTH_ERROR
 } from '../actions/auth';
 
+
 export const initialState = {
     authToken: null, 
     currentUser: null,

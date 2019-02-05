@@ -3,6 +3,7 @@
   flex-direction: column;
   background-color: white;
   margin-bottom: 50px;
+  min-width: 400px;
 }
 
 .divider {
