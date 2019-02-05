@@ -1,9 +1,8 @@
-import {fetchPetsBegin, fetchPetProfiles, fetchPetError, fetchPetsError, fetchPetsSuccess, fetchPetSuccess, FETCH_PETS_SUCCESS, FETCH_PETS_BEGIN, FETCH_PETS_ERROR, 
+import {fetchPetsBegin, fetchPetError, fetchPetsError, fetchPetsSuccess, fetchPetSuccess, FETCH_PETS_SUCCESS, FETCH_PETS_BEGIN, FETCH_PETS_ERROR, 
     createPetProfileError, createPetProfileSuccess, FETCH_PET_BEGIN, FETCH_PET_SUCCESS, FETCH_PET_ERROR, 
     CREATE_PET_PROFILE_SUCCESS, CREATE_PET_PROFILE_ERROR, fetchPetBegin } 
 from '../../../src/actions/petProfiles'
 import {createVeterinarianSuccess, CREATE_VETERINARIAN_SUCCESS, createVeterinarianError, CREATE_VETERINARIAN_ERROR } from '../../../src/actions/veterinarians'
-import {API_BASE_URL} from '../../config';
 
 
 
@@ -96,30 +95,5 @@ describe('createVetError', () => {
     });
 });
 
-
-describe('fetchPetProfiles', () => {
-    it('should dispatch fetchProfilesBegin and fetchProfilesSuccess', () => {
-        const expectedApiUrl = `${API_BASE_URL}/pets`;
-        const expectedHeaders = {"headers": {"map": {"authorization": "Bearer null", "content-type": "application/json"}}, "method": "get"};
-        const pets = {mock: true};
-
-        global.fetch = jest.fn().mockImplementation(() => {
-            return Promise.resolve({
-                ok: true,
-                json() {
-                    return pets;
-                }
-            })
-        });
-
-        const dispatch = jest.fn();
-
-        return fetchPetProfiles()(dispatch).then(() => {
-            expect(fetch).toHaveBeenCalledWith(expectedApiUrl, expectedHeaders);
-            expect(dispatch).toHaveBeenCalledWith(fetchPetProfiles());
-            expect(dispatch).toHaveBeenCalledWith(fetchPetSuccess(pets))
-        })
-    });
-});
 
 
