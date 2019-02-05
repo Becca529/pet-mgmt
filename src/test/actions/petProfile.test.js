@@ -97,29 +97,29 @@ describe('createVetError', () => {
 });
 
 
-// describe('fetchPetProfiles', () => {
-//     it('should dispatch fetchProfilesBegin and fetchProfilesSuccess', () => {
-//         const expectedApiUrl = `${API_BASE_URL}/pets`;
-//         const expectedHeaders = {"headers": {"map": {"authorization": "Bearer null", "content-type": "application/json"}}, "method": "get"};
-//         const pets = {mock: true};
+describe('fetchPetProfiles', () => {
+    it('should dispatch fetchProfilesBegin and fetchProfilesSuccess', () => {
+        const expectedApiUrl = `${API_BASE_URL}/pets`;
+        const expectedHeaders = {"headers": {"map": {"authorization": "Bearer null", "content-type": "application/json"}}, "method": "get"};
+        const pets = {mock: true};
 
-//         global.fetch = jest.fn().mockImplementation(() => {
-//             return Promise.resolve({
-//                 ok: true,
-//                 json() {
-//                     return pets;
-//                 }
-//             })
-//         });
+        global.fetch = jest.fn().mockImplementation(() => {
+            return Promise.resolve({
+                ok: true,
+                json() {
+                    return pets;
+                }
+            })
+        });
 
-//         const dispatch = jest.fn();
+        const dispatch = jest.fn();
 
-//         return fetchPetProfiles()(dispatch).then(() => {
-//             expect(fetch).toHaveBeenCalledWith(expectedApiUrl, expectedHeaders);
-//             expect(dispatch).toHaveBeenCalledWith(fetchPetProfiles());
-//             expect(dispatch).toHaveBeenCalledWith(fetchPetSuccess(pets))
-//         })
-//     });
-// });
+        return fetchPetProfiles()(dispatch).then(() => {
+            expect(fetch).toHaveBeenCalledWith(expectedApiUrl, expectedHeaders);
+            expect(dispatch).toHaveBeenCalledWith(fetchPetProfiles());
+            expect(dispatch).toHaveBeenCalledWith(fetchPetSuccess(pets))
+        })
+    });
+});
 
 

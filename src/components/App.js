@@ -43,7 +43,6 @@ export class App extends React.Component {
       if (!this.refreshInterval) {
           return;
       }
-
       clearInterval(this.refreshInterval);
   }
 
