@@ -10,6 +10,7 @@ import {deletePetSubdocument, setCurrentPetDetail, fetchPetProfile, clearPetDeta
 export class PetProfilePage extends React.Component {
   componentDidMount() {
     const petId = this.props.match.params.petId;
+    console.log(petId);
       this.props.dispatch(clearPetDetail());
       this.props.dispatch(fetchPetProfile(petId));
   }

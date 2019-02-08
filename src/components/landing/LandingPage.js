@@ -4,11 +4,22 @@ import FeatureBox from "./FeatureBox";
 import { connect } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 
-export function LandingPage(props) {
-  // If we are logged in redirect straight to the user's dashboard
-  if (props.loggedIn) {
-    return <Redirect to="/home" />;
+export class LandingPage extends React.Component {
+
+  componentWillMount(){
+    document.getElementById('body').className=''
   }
+
+
+  render() {
+    if (this.props.loggedIn) {
+      return <Redirect to="/home" />;
+    }
+     
+  // If we are logged in redirect straight to the user's dashboard
+  // if (props.loggedIn) {
+  //   return <Redirect to="/home" />;
+  // }
 
   return (
     <div className="landing">
@@ -51,9 +62,15 @@ export function LandingPage(props) {
     </div>
   );
 }
+}
 
-const mapStateToProps = state => ({
-  loggedIn: state.auth.currentUser !== null
-});
+const mapStateToProps = state => {
+  return {
+    loggedIn: state.auth.currentUser !== null 
+  }
+};
 
 export default connect(mapStateToProps)(LandingPage);
+
+
+

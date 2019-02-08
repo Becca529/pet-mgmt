@@ -9,7 +9,6 @@ body {
   min-height: 100vh;
   margin-top:80px;
   background: url(../imgs/landing-background.jpg) no-repeat center center fixed;
-
 }
 
 main {
@@ -22,6 +21,9 @@ main {
   box-shadow: 5px 55px 50px -20px #b6b6b6; 
 }
 
+body.logged-in{
+  background: white;
+}
 
 button {
   font-size: 12px;

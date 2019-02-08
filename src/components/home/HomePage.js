@@ -14,6 +14,14 @@ import PetProfileCard from "./PetProfileCard";
 
 export class HomePage extends React.Component {
   
+  componentWillMount(){
+    document.getElementById('body').className='logged-in'
+  }
+
+    componentWillUnmount(){
+    document.getElementById('body').className=''
+  }
+  
   componentDidMount() {
     this.props.dispatch(clearPetDetail());
     this.props.dispatch(fetchPetProfiles());
